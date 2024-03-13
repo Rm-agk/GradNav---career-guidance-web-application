@@ -1,0 +1,14 @@
+<!-- templates/submit_grades.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Submit Grades</title>
+</head>
+<body>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Calculate Points</button>
+    </form>
+</body>
+</html>

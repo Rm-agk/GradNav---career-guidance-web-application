@@ -1,0 +1,172 @@
+{% extends 'index.html' %}
+{% block title %}Blogs - gradnav{% endblock title %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CAO Calculator</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            const pointTable = {
+                'H1': 100, 'H2': 88, 'H3': 77, 'H4': 66, 'H5': 56, 'H6': 46, 'H7': 37, 'H8': 0,
+                'O1': 56, 'O2': 46, 'O3': 37, 'O4': 28, 'O5': 20, 'O6': 12, 'O7': 0, 'O8': 0
+            };
+
+            function calculatePoints() {
+                var totalPointsArray = [];
+                $("select[name*='grade']").each(function (index) {
+                    var level = $("select[name='level" + (index + 1) + "']").val();
+                    var grade = $(this).val();
+                    var points = pointTable[grade] || 0;
+                    if (index === 0 && level === 'H') { // Checking if Maths and Higher Level
+                        points += 25; // Extra points for Higher Level Maths
+                    }
+                    totalPointsArray.push(points);
+                });
+
+                // Sort points array to get the best 6 subjects
+                totalPointsArray.sort((a, b) => b - a);
+                var totalPoints = totalPointsArray.slice(0, 6).reduce((a, b) => a + b, 0);
+                
+                $("#total_points").text("Total Points: " + totalPoints);
+            }
+
+            function updateGradeOptions(levelSelect) {
+                var level = levelSelect.val();
+                var gradeSelect = levelSelect.closest('tr').find("select[name*='grade']");
+                gradeSelect.empty();
+                var grades = level === 'H' ? ['H1','H2','H3','H4','H5','H6','H7','H8'] : ['O1','O2','O3','O4','O5','O6','O7','O8'];
+                grades.forEach(function(grade) {
+                    gradeSelect.append(new Option(grade, grade));
+                });
+            }
+
+            $("select[name*='level']").change(function () {
+                updateGradeOptions($(this));
+            });
+
+            $("select[name*='level'], select[name*='grade']").change(function () {
+                calculatePoints();
+            });
+
+            // Initial setup for grade options based on level
+            $("select[name*='level']").each(function () {
+                updateGradeOptions($(this));
+            });
+        });
+    </script>
+</head>
+<body>
+    <main class="container">
+        <h1>CAO Calculator</h1>
+        <form>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Subject</th>
+                        <th>Level</th>
+                        <th>Grade</th>
+                        <th>Points</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Subjects rows for 8 subjects -->
+                    <tr>
+                        <td>Maths</td>
+                        <td>
+                            <select name="level1">
+                                <option value="H">Higher</option>
+                                <option value="O">Ordinary</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select name="grade1"></select>
+                        </td>
+                        <td><input type="text" name="points1" readonly></td>
+                    </tr>
+                    <tr>
+                        <td>Subject 2</td>
+                        <td>
+                            <select name="level2"> <!-- Corrected name attribute -->
+                                <option value="H">Higher</option>
+                                <option value="O">Ordinary</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select name="grade2"></select> <!-- Corrected name attribute -->
+                        </td>
+                        <td><input type="text" name="points2" readonly></td> <!-- Corrected name attribute -->
+                    </tr>
+
+                    <tr>
+                        <td>Subject 3</td>
+                        <td>
+                            <select name="level1">
+                                <option value="H">Higher</option>
+                                <option value="O">Ordinary</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select name="grade1"></select>
+                        </td>
+                        <td><input type="text" name="points1" readonly></td>
+                    </tr>
+
+                    <tr>
+                        <td>Subject 4</td>
+                        <td>
+                            <select name="level1">
+                                <option value="H">Higher</option>
+                                <option value="O">Ordinary</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select name="grade1"></select>
+                        </td>
+                        <td><input type="text" name="points1" readonly></td>
+                    </tr>
+
+                    <tr>
+                        <td>Subject 5</td>
+                        <td>
+                            <select name="level1">
+                                <option value="H">Higher</option>
+                                <option value="O">Ordinary</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select name="grade1"></select>
+                        </td>
+                        <td><input type="text" name="points1" readonly></td>
+                    </tr>
+
+                    <tr>
+                        <td>Subject 6</td>
+                        <td>
+                            <select name="level1">
+                                <option value="H">Higher</option>
+                                <option value="O">Ordinary</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select name="grade1"></select>
+                        </td>
+                        <td><input type="text" name="points1" readonly></td>
+                    </tr>
+                    <!-- Additional subjects rows replicated from above, adjusting the name attribute values accordingly -->
+                </tbody>
+            </table>
+            <button type="button" onclick="event.preventDefault(); calculatePoints();">Calculate</button>
+        </form>
+        <p id="total_points">Total Points: 0</p>
+    </main>
+</body>
+</html>
+
+{% endblock content %}
