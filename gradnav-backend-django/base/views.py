@@ -238,3 +238,36 @@ def calculate_points(request):
     return render(request, 'calculate.html', {'form': form})
 
 
+##CHATBOT VIEW
+from django.shortcuts import render
+from django.http import JsonResponse
+import openai
+from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_http_methods
+from django.utils.decorators import method_decorator
+from django.views import View
+
+# Initialize the OpenAI client with your API key
+client = openai.OpenAI(api_key=settings.OPENAI_API_KEY)
+
+@csrf_exempt  # Use csrf_exempt for demonstration purposes only
+@require_http_methods(["POST"])  # Ensure this view only accepts POST requests
+def chat_with_gpt(request):
+    # Extract user message from the AJAX POST request
+    user_message = request.POST.get("message")
+
+    try:
+        # Create chat completion with OpenAI
+        chat_completion = client.chat.completions.create(
+            messages=[{"role": "user", "content": user_message}],
+            model="gpt-3.5-turbo-0125"  # Adjust the model name as necessary
+        )
+        # Extract the response
+        # Ensure proper access to the message content based on API response structure
+        chat_response = chat_completion.choices[0].message.content  # Adjusted access method
+    except Exception as e:
+        chat_response = f"An error occurred: {str(e)}"
+
+    # Return the chatbot's response in JSON format
+    return JsonResponse({"response": chat_response})

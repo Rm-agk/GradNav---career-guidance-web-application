@@ -1,4 +1,8 @@
 {% load static %}
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<script src="{% static 'js/style.js' %}" defer></script>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,5 +39,29 @@
         const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
     </script>
 </body>
+
+<!-- Chatbot Widget -->
+<div id="chatbot-widget-container">
+    <!-- Chatbot widget button -->
+    <button id="chatbot-toggle">&#9993;</button>
+    
+    <!-- Chatbot widget -->
+    <div id="chatbot-widget">
+        <!-- Header of the chat widget -->
+        <div id="chat-header">
+            <span>GradNav Chatbot</span>
+            <button id="chat-close">&#10005;</button>
+        </div>
+        
+        <!-- Where the chat messages will appear -->
+        <div id="chat-messages"></div>
+        
+        <!-- User input area -->
+        <textarea id="chat-input" placeholder="Ask me any question..."></textarea>
+        
+        <!-- Send button -->
+        <button id="chat-send">Send</button>
+    </div>
+</div>
 
 </html>
