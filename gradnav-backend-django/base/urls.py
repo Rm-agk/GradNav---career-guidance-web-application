@@ -14,4 +14,5 @@ urlpatterns = [
     path('downloads', views.downloads_view, name='downloads'),
     path('search/users', views.search_users_view, name='search_users'),
     path('calculate', calculate_points, name='calculate'),
+    path('chat/', views.chat_with_gpt, name='chat_with_gpt'),
 ]

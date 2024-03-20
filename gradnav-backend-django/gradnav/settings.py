@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -119,11 +119,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = '/static/' # url
+STATIC_URL = 'static/' # url
 STATIC_ROOT = BASE_DIR / 'staticfiles'# production
 
 STATICFILES_DIRS = [
-    BASE_DIR / 'static/' # folder location
+    BASE_DIR / 'static' # folder location
 ]
 
 MEDIA_URL = 'media/'
@@ -135,3 +135,6 @@ CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Add this line
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
