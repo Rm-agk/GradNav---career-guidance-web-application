@@ -1,0 +1,18 @@
+{% extends 'index.html' %}
+{% block title %}About Us - gradnav{% endblock title %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculation Results</title>
+</head>
+<body>
+    <h1>Congratulations, you got {{ total_points }} points. The hard work paid off!</h1>
+    <a href="{% url 'calculate' %}">Calculate Again</a>
+</body>
+</html>
+
+{% endblock content %}
