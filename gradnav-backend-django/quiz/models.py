@@ -3,8 +3,6 @@ import pandas as pd
 from django.contrib.auth.models import User
 from django.db.models import Sum
 from django.db.models.signals import post_save
-from django.dispatch import receiver
-
 
 # Create your models here.
 class Category(models.Model):
@@ -19,20 +17,14 @@ class Category(models.Model):
 class Quiz(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
-    submissions_count = models.IntegerField(default=0)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     quiz_file = models.FileField(upload_to='quiz/')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    submissions_count = models.IntegerField(default=0)
 
-    def __str__(self):
-        return self.title
-        
     class Meta:
         verbose_name_plural = 'Quizzes'
-
-    def __str__(self):
-        return self.title
 
     # call the function on quiz save
     def save(self, *args, **kwargs):
@@ -63,6 +55,10 @@ class Quiz(models.Model):
             choice_2 = Choice.objects.get_or_create(question=question[0], text=choice2, is_correct=correct_answer == 'B')
             choice_3 = Choice.objects.get_or_create(question=question[0], text=choice3, is_correct=correct_answer == 'C')
             choice_4 = Choice.objects.get_or_create(question=question[0], text=choice4, is_correct=correct_answer == 'D')
+    
+    def update_submissions_count(self):
+        self.submissions_count = QuizSubmission.objects.filter(quiz=self).count()
+        self.save()
 
 class Question(models.Model):
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
@@ -89,10 +85,11 @@ class QuizSubmission(models.Model):
     def __str__(self):
         return f"{self.user}, {self.quiz.title}"
 
-class UserRank(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    rank = models.IntegerField(null=True, blank=True)
-    total_score = models.IntegerField(null=True, blank=True)
+from django.dispatch import receiver
+from .models import QuizSubmission, Quiz
 
-    def __str__(self):
-        return f"{self.rank}, {self.user.username}"
+@receiver(post_save, sender=QuizSubmission)
+def update_quiz_submissions_count(sender, instance, created, **kwargs):
+    if created:
+        instance.quiz.submissions_count += 1
+        instance.quiz.save()

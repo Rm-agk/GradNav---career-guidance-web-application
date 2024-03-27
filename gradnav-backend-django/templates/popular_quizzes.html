@@ -1,25 +1,28 @@
 {% extends 'index.html' %}
 
-{% block title %}@{{request.user.username}} Popular Quizzes - gradnav{% endblock title %}
+{% block title %}@{{ request.user.username }} Popular Quizzes - gradnav{% endblock title %}
 
 {% block content %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Most Popular Quizzes</title>
-</head>
-<body>
-    <h1>Most Popular Quizzes</h1>
-    <ul>
-        {% for quiz in popular_quizzes %}
-            <li>{{ quiz.title }} - {{ quiz.submissions_count }} submissions</li>
-        {% endfor %}
-    </ul>
-</body>
-</html>
-
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card mt-5">
+                <div class="card-header">
+                    <h1 class="card-title text-center">Most Popular Quizzes</h1>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        {% for quiz in popular_quizzes %}
+                        <li class="list-group-item">
+                            <span class="fw-bold">{{ quiz.title }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock content %}

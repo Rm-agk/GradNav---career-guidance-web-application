@@ -1,5 +1,9 @@
 from django.db import models
 from ckeditor.fields import RichTextField
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from quiz.models import QuizSubmission
+import pandas as pd
 
 # Create your models here.
 class Message(models.Model):
@@ -54,6 +58,10 @@ class Quiz(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def update_submissions_count(self):
+        self.submissions_count = QuizSubmission.objects.filter(quiz=self).count()
+        self.save()
 
     # call the function on quiz save
     def save(self, *args, **kwargs):
@@ -84,3 +92,8 @@ class Quiz(models.Model):
             choice_2 = Choice.objects.get_or_create(question=question[0], text=choice2, is_correct=correct_answer == 'B')
             choice_3 = Choice.objects.get_or_create(question=question[0], text=choice3, is_correct=correct_answer == 'C')
             choice_4 = Choice.objects.get_or_create(question=question[0], text=choice4, is_correct=correct_answer == 'D')
+
+# Signal to update submissions count after a QuizSubmission is saved
+@receiver(post_save, sender=QuizSubmission)
+def update_quiz_submissions_count(sender, instance, created, **kwargs):
+    instance.quiz.update_submissions_count()

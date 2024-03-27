@@ -2,14 +2,13 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
 from account.models import Profile
-from quiz.models import UserRank, Quiz, QuizSubmission, Question
+from quiz.models import Quiz, QuizSubmission, Question
 from django.contrib.auth.decorators import login_required, user_passes_test
 import datetime
 from .models import Message
 from django.db.models import Count, Q
 import math
 from django.db.models.functions import ExtractYear
-from django.shortcuts import render, redirect
 from .forms import GradeForm
 from .models import Grade
 from .models import Quiz
@@ -18,28 +17,7 @@ from .models import Quiz
 # Create your views here.
 @login_required(login_url="login")
 def home(request):
-    leaderboard_users = UserRank.objects.order_by('rank')[:4]
-
-    user_object = User.objects.get(username=request.user)
-    
-    # Attempt to get the user's profile; create if not exists
-    user_profile, created = Profile.objects.get_or_create(user=user_object)
-
-    context = {"user_profile": user_profile, "leaderboard_users": leaderboard_users}
-    return render(request, 'welcome.html', context)
-
-
-@login_required(login_url="login")
-def leaderboard_view(request):
-
-    user_object = User.objects.get(username=request.user)
-    user_profile = Profile.objects.get(user=user_object)
-
-    leaderboard_users = UserRank.objects.order_by('rank')
-
-    context = {"leaderboard_users": leaderboard_users, "user_profile": user_profile}
-    return render(request, "leaderboard.html", context)
-
+    return render(request, 'welcome.html')
 
 def is_superuser(user):
     return user.is_superuser
@@ -251,7 +229,7 @@ from django.utils.decorators import method_decorator
 from django.views import View
 
 # Initialize the OpenAI client with your API key
-client = openai.OpenAI(api_key=settings.OPENAI_API_KEY)
+client = openai.api_key = settings.OPENAI_API_KEY
 
 @csrf_exempt  # Use csrf_exempt for demonstration purposes only
 @require_http_methods(["POST"])  # Ensure this view only accepts POST requests

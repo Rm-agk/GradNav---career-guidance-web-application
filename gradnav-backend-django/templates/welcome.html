@@ -1,6 +1,6 @@
 {% extends "index.html" %}
 {% load static %}
-
+{% block title %}@{{ request.user.username }} Popular Quizzes - gradnav{% endblock title %}
 {% block content %}
 
 <div class="container text-center my-5">
@@ -21,22 +21,26 @@
 <div class="container text-center">
     <h1 class="display-4 text-center my-5">The Most Popular Courses</h1>
 
-    <div class="row row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mx-3">
-        {% if leaderboard_users|length == 0 %}
-        <div class="col-lg-4 position-relative mb-4">
-            <h4 class="text-center text-danger">No User Available on Leaderboard!!</h4>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card mt-5">
+                <div class="card-header">
+                    <h1 class="card-title text-center">Most Popular Quizzes</h1>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        {% for quiz in popular_quizzes %}
+                        <li class="list-group-item">
+                            <span class="fw-bold">{{ quiz.title }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
         </div>
-        {% else %}
-        {% for rank in leaderboard_users %}
-        <div class="col-lg-4 position-relative mb-4">
-            <img src="{{rank.user.profile.profile_img.url}}" class="img-fluid" width="150" height="150" alt="user-profile">
-            <span class="position-absolute top-0 start-90 translate-middle badge rounded-pill bg-success">{{forloop.counter}}</span>
-            <h2 class="fw-normal">@{{rank.user.username}}</h2>
-            <p>{{rank.user.profile.bio|truncatewords:5}}</p>
-            <p><a class="btn btn-secondary" href="{% url 'profile' rank.user.username  %}">View Profile »</a></p>
-        </div>
-        {% endfor %}
-        {% endif %}
     </div>
+</div>
+</div>
 
 {% endblock content %}
