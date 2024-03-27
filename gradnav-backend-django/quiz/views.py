@@ -79,3 +79,16 @@ def quiz_view(request, quiz_id):
     else:
         return redirect('all_quiz')
     return render(request, 'quiz.html', context)
+
+def popular_quizzes(request):
+    # Retrieve top 5 most popular quizzes based on submissions count
+    popular_quizzes = Quiz.objects.order_by('-submissions_count')[:5]
+    return render(request, 'popular_quizzes.html', {'popular_quizzes': popular_quizzes})
+
+def quiz_submission(request, quiz_id):
+    # Logic to handle quiz submission
+    quiz = Quiz.objects.get(id=quiz_id)
+    quiz.submissions_count += 1
+    quiz.save()
+    # Redirect to the quiz page or any other page as needed
+    return redirect('quiz', quiz_id)

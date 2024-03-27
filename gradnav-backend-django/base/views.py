@@ -12,6 +12,8 @@ from django.db.models.functions import ExtractYear
 from django.shortcuts import render, redirect
 from .forms import GradeForm
 from .models import Grade
+from .models import Quiz
+
 
 # Create your views here.
 @login_required(login_url="login")
@@ -248,8 +250,9 @@ from django.views.decorators.http import require_http_methods
 from django.utils.decorators import method_decorator
 from django.views import View
 
-# Initialize the OpenAI client with your API key
-client = openai.OpenAI(api_key=settings.OPENAI_API_KEY)
+# Initialize the OpenAI client with your API                                                                 key
+#client = openai.OpenAI(api_key=settings.OPENAI_API_KEY)
+client = openai.api_key = settings.OPENAI_API_KEY
 
 @csrf_exempt  # Use csrf_exempt for demonstration purposes only
 @require_http_methods(["POST"])  # Ensure this view only accepts POST requests
@@ -271,3 +274,16 @@ def chat_with_gpt(request):
 
     # Return the chatbot's response in JSON format
     return JsonResponse({"response": chat_response})
+
+def popular_quizzes(request):
+    # Retrieve top 5 most popular quizzes based on submissions count
+    popular_quizzes = Quiz.objects.order_by('-submissions_count')[:5]
+    return render(request, 'popular_quizzes.html', {'popular_quizzes': popular_quizzes})
+
+def quiz_submission(request, quiz_id):
+    # Logic to handle quiz submission
+    quiz = Quiz.objects.get(id=quiz_id)
+    quiz.submissions_count += 1
+    quiz.save()
+    # Redirect to the quiz page or any other page as needed
+    return redirect('quiz', quiz_id)

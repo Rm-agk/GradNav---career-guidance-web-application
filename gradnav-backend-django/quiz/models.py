@@ -19,11 +19,15 @@ class Category(models.Model):
 class Quiz(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
+    submissions_count = models.IntegerField(default=0)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     quiz_file = models.FileField(upload_to='quiz/')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return self.title
+        
     class Meta:
         verbose_name_plural = 'Quizzes'
 
@@ -92,27 +96,3 @@ class UserRank(models.Model):
 
     def __str__(self):
         return f"{self.rank}, {self.user.username}"
-
-@receiver(post_save, sender=QuizSubmission)
-def update_leaderboard(sender, instance, created, **kwargs):
-    if created:
-        update_leaderboard()
-
-
-
-def update_leaderboard():
-    # Count the sum of scores for all users
-    user_scores = (QuizSubmission.objects.values('user').annotate(total_score=Sum('score')).order_by('-total_score'))
-
-    # Update rank based on the sorted list
-    rank = 1
-    for entry in user_scores:
-        user_id = entry['user']
-        total_score = entry['total_score']
-
-        user_rank, created = UserRank.objects.get_or_create(user_id=user_id)
-        user_rank.rank = rank
-        user_rank.total_score = total_score
-        user_rank.save()
-
-        rank += 1

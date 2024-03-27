@@ -15,4 +15,6 @@ urlpatterns = [
     path('search/users', views.search_users_view, name='search_users'),
     path('calculate', calculate_points, name='calculate'),
     path('chat/', views.chat_with_gpt, name='chat_with_gpt'),
+    path('popular-quizzes/', views.popular_quizzes, name='popular_quizzes'),
+    path('quiz-submission/<int:quiz_id>/', views.quiz_submission, name='quiz_submission'),
 ]
