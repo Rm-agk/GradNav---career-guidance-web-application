@@ -250,9 +250,8 @@ from django.views.decorators.http import require_http_methods
 from django.utils.decorators import method_decorator
 from django.views import View
 
-# Initialize the OpenAI client with your API                                                                 key
-#client = openai.OpenAI(api_key=settings.OPENAI_API_KEY)
-client = openai.api_key = settings.OPENAI_API_KEY
+# Initialize the OpenAI client with your API key
+client = openai.OpenAI(api_key=settings.OPENAI_API_KEY)
 
 @csrf_exempt  # Use csrf_exempt for demonstration purposes only
 @require_http_methods(["POST"])  # Ensure this view only accepts POST requests
@@ -274,6 +273,7 @@ def chat_with_gpt(request):
 
     # Return the chatbot's response in JSON format
     return JsonResponse({"response": chat_response})
+
 
 def popular_quizzes(request):
     # Retrieve top 5 most popular quizzes based on submissions count
