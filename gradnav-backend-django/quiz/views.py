@@ -84,5 +84,58 @@ from django.shortcuts import render
 from .models import Quiz
 
 def popular_quizzes(request):
-    popular_quizzes = Quiz.objects.order_by('-submissions_count')[:5]
+    popular_quizzes = Quiz.objects.order_by('-submissions_count')[:6]
     return render(request, 'popular_quizzes.html', {'popular_quizzes': popular_quizzes})
+
+
+import requests
+
+def generate_quiz_image(request, quiz_title):
+    api_key = 'AIzaSyCzRFLYY6wTAHaah0C6hIzvsLJEqMSsKtk'
+    cx = 'c2755331ec3c04fc9'
+
+    # Make API request to Google Custom Search API
+    url = f'https://www.googleapis.com/customsearch/v1?key={api_key}&cx={cx}&searchType=image&q={quiz_title}'
+    response = requests.get(url)
+    data = response.json()
+
+    # Extract image URL from API response
+    if 'items' in data:
+        image_url = data['items'][0]['link']  # Get the first image URL
+    else:
+        # If no image found, use a default image or handle the case as needed
+        image_url = 'https://example.com/default_image.png'
+
+    # Return a redirect response to the image URL
+    return redirect(image_url)
+
+from googleapiclient.discovery import build
+
+def quiz_details(request, quiz_title):
+    # Fetch additional information using the quiz title
+    additional_info = get_additional_info(quiz_title)
+
+    # Pass the retrieved information to the template
+    context = {
+        'quiz_title': quiz_title,
+        'additional_info': additional_info,
+    }
+    return render(request, 'quiz_details.html', context)
+
+def get_additional_info(quiz_title):
+    # Function to fetch additional information related to the quiz title
+    # This could involve querying external APIs, databases, or any other source
+
+    # Here, we'll just demonstrate fetching some sample data using the Google API
+    api_key = 'AIzaSyCzRFLYY6wTAHaah0C6hIzvsLJEqMSsKtk'
+    cse_id = 'c2755331ec3c04fc9'
+    query = f"{quiz_title} course in Ireland"  # Example query for fetching course information in Ireland
+
+    service = build('customsearch', 'v1', developerKey=api_key)
+    result = service.cse().list(q=query, cx=cse_id, num=1).execute()
+
+    additional_info = {
+        'course_info': result['items'][0]['snippet'] if 'items' in result else None
+        # You can add more key-value pairs for other information like job details, college info, etc.
+    }
+    return additional_info

@@ -1,0 +1,71 @@
+<!-- quiz_details.html -->
+
+{% extends "index.html" %}
+{% load static %}
+
+{% block title %}Quiz Details - GradNav{% endblock title %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="display-4 text-center mb-4">{{ quiz_title }}</h1>
+
+    <!-- Course Information -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2 class="card-title">Course Information</h2>
+        </div>
+        <div class="card-body">
+            {% if additional_info.course_info %}
+            <p>{{ additional_info.course_info }}</p>
+            {% else %}
+            <p>No course information available.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Job Details -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2 class="card-title">Job Details</h2>
+        </div>
+        <div class="card-body">
+            <!-- Add job details here -->
+            <p>Job details will be displayed here.</p>
+        </div>
+    </div>
+
+    <!-- College Information -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2 class="card-title">College Information</h2>
+        </div>
+        <div class="card-body">
+            <!-- Add college information here -->
+            <p>College information will be displayed here.</p>
+        </div>
+    </div>
+
+    <!-- Salary Insights -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2 class="card-title">Salary Insights</h2>
+        </div>
+        <div class="card-body">
+            <!-- Add salary insights here -->
+            <p>Salary insights will be displayed here.</p>
+        </div>
+    </div>
+
+    <!-- Other Relevant Information -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2 class="card-title">Other Relevant Information</h2>
+        </div>
+        <div class="card-body">
+            <!-- Add other relevant information here -->
+            <p>Other relevant information will be displayed here.</p>
+        </div>
+    </div>
+
+</div>
+{% endblock content %}

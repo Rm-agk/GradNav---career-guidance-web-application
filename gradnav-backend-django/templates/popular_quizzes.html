@@ -3,25 +3,29 @@
 {% block title %}@{{ request.user.username }} Popular Quizzes - gradnav{% endblock title %}
 
 {% block content %}
+<!-- Add the search form here if needed -->
 
 <div class="container">
-    <div class="row">
-        <div class="col-md-8 offset-md-2">
-            <div class="card mt-5">
-                <div class="card-header">
-                    <h1 class="card-title text-center">Most Popular Quizzes</h1>
-                </div>
+    <h1 class="text-center mt-5 mb-4">Most Popular Courses</h1>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <!-- Display popular quizzes -->
+        {% for quiz in popular_quizzes %}
+        <div class="col">
+            <div class="card h-100">
+                <!-- Display quiz image (you'll need to handle image generation) -->
+                <img src="{% url 'generate_quiz_image' quiz.title %}" class="card-img-top" alt="Quiz Image">
                 <div class="card-body">
-                    <ul class="list-group list-group-flush">
-                        {% for quiz in popular_quizzes %}
-                        <li class="list-group-item">
-                            <span class="fw-bold">{{ quiz.title }}</span>
-                        </li>
-                        {% endfor %}
-                    </ul>
+                    <h5 class="card-title">{{ quiz.title }}</h5>
+                    <p class="card-text">{{ quiz.description }}</p>
+                </div>
+                <div class="card-footer">
+                    <!-- Exlpore more button -->
+                    <a href="{% url 'quiz_details' quiz.title %}" class="btn btn-primary">Explore More</a>
                 </div>
             </div>
         </div>
+        {% endfor %}
     </div>
 </div>
 
