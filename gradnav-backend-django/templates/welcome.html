@@ -1,45 +1,177 @@
 {% extends "index.html" %}
 {% load static %}
-{% block title %}@{{ request.user.username }} Popular Quizzes - gradnav{% endblock title %}
+{% block title %}@{{ request.user.username }} Welcome - GradNav{% endblock title %}
 {% block content %}
 
-<div class="container text-center my-5">
-    <h1 class="display-5 fw-bold my-2">Welcome to GradNav</h1>
-    <p class="fs-3">"Empowering Futures: Your Path to Success, Tailored Just for You!"</p>
+<html>
+	<body class="homepage is-preload">
+		<div id="page-wrapper">
+	
+<section id="banner" style="background: url('{% static 'images/00.png' %}'); background-size: cover;">
+  <header>
+    <div class="container text-center my-5">
+    <h2>Welcome to<strong> GradNav</strong>.</h2>
+    <h3>
+      "Empowering Futures: Your Path to Success, Tailored Just for You!"
+    </h3>
+    <br>
     <div class="d-inline-flex gap-2 mb-5">
-        <a href="{% url 'all_quiz' %}" class="d-inline-flex align-items-center btn btn-primary btn-lg px-4">
-            Take a quiz
-        </a>
-        {% if not request.user.is_authenticated %}
-        <a href="{% url 'register' %}" class="btn btn-outline-secondary btn-lg px-4" type="button">
-            Sign Up
-        </a>
-        {% endif %}
+      <a href="{% url 'all_quiz' %}" class="d-inline-flex align-items-center btn btn-primary btn-lg px-4">
+          Take a Quiz
+      </a>
+      {% if not request.user.is_authenticated %}
+      <a href="{% url 'register' %}" class="btn btn-outline-secondary btn-lg px-4" type="button">
+          Sign Up
+      </a>
+      {% endif %}
+  </div>
     </div>
+  </header>
+</section>
+
+<!-- Main -->
+<div class="wrapper style2">
+
+  <article id="main" class="container special">
+    <header>
+      <br>
+      <h2><a href="#">GradNav, The Vision</a></h2>
+      <p>
+        Sociis aenean eu aenean mollis mollis facilisis primis ornare penatibus aenean. Cursus ac enim
+        pulvinar curabitur morbi convallis. Lectus malesuada sed fermentum dolore amet.
+      </p>
+    </header>
+    <p>
+      Commodo id natoque malesuada sollicitudin elit suscipit. Curae suspendisse mauris posuere accumsan massa
+      posuere lacus convallis tellus interdum. Amet nullam fringilla nibh nulla convallis ut venenatis purus
+      sit arcu sociis. Nunc fermentum adipiscing tempor cursus nascetur adipiscing adipiscing. Primis aliquam
+      mus lacinia lobortis phasellus suscipit. Fermentum lobortis non tristique ante proin sociis accumsan
+      lobortis. Auctor etiam porttitor phasellus tempus cubilia ultrices tempor sagittis. Nisl fermentum
+      consequat integer interdum integer purus sapien. Nibh eleifend nulla nascetur pharetra commodo mi augue
+      interdum tellus. Ornare cursus augue feugiat sodales velit lorem. Semper elementum ullamcorper lacinia
+      natoque aenean scelerisque.
+    </p>
+    <footer>
+      <a href="#" class="button">Continue Reading</a>
+    </footer>
+  </article>
+
 </div>
 
-<div class="container">
-    <h1 class="text-center mt-5 mb-4">Most Popular Courses</h1>
+<!-- Carousel -->
+<section class="carousel">
+  <div class="reel">
 
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-        <!-- Display popular quizzes -->
-        {% for quiz in popular_quizzes %}
-        <div class="col">
-            <div class="card h-100">
-                <!-- Display quiz image (you'll need to handle image generation) -->
-                <img src="{% url 'generate_quiz_image' quiz.title %}" class="card-img-top" alt="Quiz Image">
-                <div class="card-body">
-                    <h5 class="card-title">{{ quiz.title }}</h5>
-                    <p class="card-text">{{ quiz.description }}</p>
-                </div>
-                <div class="card-footer">
-                    <!-- Display short description of the quiz title -->
-                    <small class="text-muted">{{ quiz.title }}</small>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
+    <article>
+      <a href="/about" class="image featured"><img src="{% static 'images/student12.jpg' %}" alt="My image"></a>
+      <header>
+        <h3><a href="/about">About Us</a></h3>
+      </header>
+      <p>Learn more about the GradNav Vision, Values and Goals</p>
+    </article>
+
+    <article>
+      <a href="quiz/all_quiz" class="image featured"><img src="{% static 'images/student13.jpg' %}" alt="My image"></a>
+      <header>
+        <h3><a href="quiz/all_quiz">Career Pathways</a></h3>
+      </header>
+      <p>Start exploring other pathways that could be suited to you</p>
+    </article>
+
+    <article>
+      <a href="quiz/popular-quizzes/" class="image featured"><img src="{% static 'images/student2.jpg' %}" alt="My image"></a>
+      <header>
+        <h3><a href="quiz/popular-quizzes/">Popular Pathways</a></h3>
+      </header>
+      <p>Look into the pathways you peers are considering and looking into</p>
+    </article>
+
+    <article>
+      <a href="calculate" class="image featured"><img src="{% static 'images/student3.jpg' %}" alt="My image"></a>
+      <header>
+        <h3><a href="calculate">CAO Calculator</a></h3>
+      </header>
+      <p>Count up your CAO Points. Let's see how we can help!</p>
+    </article>
+
+    <article>
+      <a href="/downloads" class="image featured"><img src="{% static 'images/student14.jpg' %}" alt="My image"></a>
+      <header>
+        <h3><a href="/downloads">Important Links</a></h3>
+      </header>
+      <p>Here's a couple webpages and forms you should look through</p>
+    </article>
+
+    <article>
+      <a href="#" class="image featured"><img src="{% static 'images/student4.jpg' %}" alt="My image"></a>
+      <header>
+        <h3><a href="#">Get in Contact</a></h3>
+      </header>
+      <p>Something you can't answer? Reach out!</p>
+    </article>
+  </div>
+</section>
+
+<!-- Features -->
+<div class="wrapper style1">
+
+  <section id="features" class="container special">
+    <header>
+      <h2>Morbi ullamcorper et varius leo lacus</h2>
+      <p>Ipsum volutpat consectetur orci metus consequat imperdiet duis integer semper magna.</p>
+    </header>
+    <div class="row">
+      <article class="col-4 col-12-mobile special">
+        <a href="#" class="image featured"><img src="{% static 'images/student7.jpg' %}" alt="My image"></a>
+        <header>
+          <h3><a href="#">Gravida aliquam penatibus</a></h3>
+        </header>
+        <p>
+          Amet nullam fringilla nibh nulla convallis tique ante proin sociis accumsan lobortis. Auctor etiam
+          porttitor phasellus tempus cubilia ultrices tempor sagittis. Nisl fermentum consequat integer interdum.
+        </p>
+      </article>
+      <article class="col-4 col-12-mobile special">
+        <a href="#" class="image featured"><img src="{% static 'images/student8.jpg' %}" alt="My image"></a>
+        <header>
+          <h3><a href="#">Sed quis rhoncus placerat</a></h3>
+        </header>
+        <p>
+          Amet nullam fringilla nibh nulla convallis tique ante proin sociis accumsan lobortis. Auctor etiam
+          porttitor phasellus tempus cubilia ultrices tempor sagittis. Nisl fermentum consequat integer interdum.
+        </p>
+      </article>
+      <article class="col-4 col-12-mobile special">
+        <a href="#" class="image featured"><img src="{% static 'images/student9.jpg' %}" alt="My image"></a>
+        <header>
+          <h3><a href="#">Magna laoreet et aliquam</a></h3>
+        </header>
+        <p>
+          Amet nullam fringilla nibh nulla convallis tique ante proin sociis accumsan lobortis. Auctor etiam
+          porttitor phasellus tempus cubilia ultrices tempor sagittis. Nisl fermentum consequat integer interdum.
+        </p>
+      </article>
     </div>
+  </section>
+  </div>
+  
 </div>
+
+</div>
+
+<!-- Scripts -->
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script> 
+<script type="text/javascript" src="{% static 'js/jquery.scrolly.min.js' %}"></script> 
+<script type="text/javascript" src="{% static 'js/jquery.dropotron.min.js' %}"></script> 
+<script type="text/javascript" src="{% static 'js/jquery.scrollex.min.js' %}"></script> 
+<script type="text/javascript" src="{% static 'js/browser.min.js' %}"></script> 
+<script type="text/javascript" src="{% static 'js/breakpoints.min.js' %}"></script> 
+<script type="text/javascript" src="{% static 'js/util.js' %}"></script> 
+<script type="text/javascript" src="{% static 'js/main.js' %}"></script> 
+
+</body>
+</html>
+</div>
+
 
 {% endblock content %}

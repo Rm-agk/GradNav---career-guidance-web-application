@@ -48,3 +48,27 @@ document.getElementById('chat-input').onkeypress = function(e) {
 document.getElementById('chat-send').onclick = function() {
     sendMessage();
 };
+
+document.addEventListener('DOMContentLoaded', () => {
+  const testimonials = document.querySelectorAll('.testimonial');
+  let currentIndex = 0;
+
+  function showTestimonial(index) {
+    testimonials.forEach((testimonial, i) => {
+      testimonial.style.display = i === index ? 'block' : 'none';
+    });
+  }
+
+  document.querySelector('.btn-prev').addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + testimonials.length) % testimonials.length;
+    showTestimonial(currentIndex);
+  });
+
+  document.querySelector('.btn-next').addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % testimonials.length;
+    showTestimonial(currentIndex);
+  });
+
+  // Initialize the first testimonial
+  showTestimonial(currentIndex);
+});

@@ -1,5 +1,13 @@
-<!-- quiz_details.html -->
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Your Page Title</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
 {% extends "index.html" %}
 {% load static %}
 
@@ -7,65 +15,38 @@
 
 {% block content %}
 <div class="container my-5">
-    <h1 class="display-4 text-center mb-4">{{ quiz_title }}</h1>
+    <h1 class="display-4 text-center mb-4">{{ quiz_title }}, The Perfect Career</h1>
+    
+    <!-- Check if there are sections to display -->
+    {% if additional_info.sections %}
+        <div id="accordion">
+            {% for section in additional_info.sections %}
+                <div class="card">
+                    <div class="card-header" id="heading{{ forloop.counter }}">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{ forloop.counter }}" aria-expanded="true" aria-controls="collapse{{ forloop.counter }}">
+                                Section {{ forloop.counter }}
+                            </button>
+                        </h5>
+                    </div>
 
-    <!-- Course Information -->
-    <div class="card mb-4">
-        <div class="card-header">
-            <h2 class="card-title">Course Information</h2>
+                    <div id="collapse{{ forloop.counter }}" class="collapse show" aria-labelledby="heading{{ forloop.counter }}" data-parent="#accordion">
+                        <div class="card-body">
+                            <pre>{{ section }}</pre>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
-        <div class="card-body">
-            {% if additional_info.course_info %}
-            <p>{{ additional_info.course_info }}</p>
-            {% else %}
-            <p>No course information available.</p>
-            {% endif %}
+    {% else %}
+        <div class="alert alert-warning" role="alert">
+            Sorry, we could not find detailed information for this quiz.
         </div>
-    </div>
-
-    <!-- Job Details -->
-    <div class="card mb-4">
-        <div class="card-header">
-            <h2 class="card-title">Job Details</h2>
-        </div>
-        <div class="card-body">
-            <!-- Add job details here -->
-            <p>Job details will be displayed here.</p>
-        </div>
-    </div>
-
-    <!-- College Information -->
-    <div class="card mb-4">
-        <div class="card-header">
-            <h2 class="card-title">College Information</h2>
-        </div>
-        <div class="card-body">
-            <!-- Add college information here -->
-            <p>College information will be displayed here.</p>
-        </div>
-    </div>
-
-    <!-- Salary Insights -->
-    <div class="card mb-4">
-        <div class="card-header">
-            <h2 class="card-title">Salary Insights</h2>
-        </div>
-        <div class="card-body">
-            <!-- Add salary insights here -->
-            <p>Salary insights will be displayed here.</p>
-        </div>
-    </div>
-
-    <!-- Other Relevant Information -->
-    <div class="card mb-4">
-        <div class="card-header">
-            <h2 class="card-title">Other Relevant Information</h2>
-        </div>
-        <div class="card-body">
-            <!-- Add other relevant information here -->
-            <p>Other relevant information will be displayed here.</p>
-        </div>
-    </div>
-
+    {% endif %}
 </div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
 {% endblock content %}

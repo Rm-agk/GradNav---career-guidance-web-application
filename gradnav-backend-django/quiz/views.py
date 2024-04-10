@@ -109,7 +109,7 @@ def generate_quiz_image(request, quiz_title):
     # Return a redirect response to the image URL
     return redirect(image_url)
 
-from googleapiclient.discovery import build
+from openai import ChatCompletion
 
 def quiz_details(request, quiz_title):
     # Fetch additional information using the quiz title
@@ -122,20 +122,42 @@ def quiz_details(request, quiz_title):
     }
     return render(request, 'quiz_details.html', context)
 
+import openai
+import re
+from django.conf import settings
+
 def get_additional_info(quiz_title):
-    # Function to fetch additional information related to the quiz title
-    # This could involve querying external APIs, databases, or any other source
+    openai.api_key = settings.OPENAI_API_KEY
 
-    # Here, we'll just demonstrate fetching some sample data using the Google API
-    api_key = 'AIzaSyCzRFLYY6wTAHaah0C6hIzvsLJEqMSsKtk'
-    cse_id = 'c2755331ec3c04fc9'
-    query = f"{quiz_title} course in Ireland"  # Example query for fetching course information in Ireland
+    prompt = f"""Given the quiz title '{quiz_title}', provide the following information:
+1. Related job opportunities and their descriptions and personality types that suit the role.
+2. Bachelor's degree courses available in Ireland related to the quiz topic and what colleges they can be studied in with points to match.
+3. Salary insights for jobs related to the quiz topic.
+4. Nearby accommodation options for students based on the courses recommended.
+5. Any other relevant information.
+"""
 
-    service = build('customsearch', 'v1', developerKey=api_key)
-    result = service.cse().list(q=query, cx=cse_id, num=1).execute()
+    try:
+        response = openai.Completion.create(
+            engine="gpt-3.5-turbo-instruct",
+            prompt=prompt,
+            temperature=0.5,
+            max_tokens=1000,
+            n=1,
+            stop=None
+        )
+        text_response = response.choices[0].text.strip()
 
-    additional_info = {
-        'course_info': result['items'][0]['snippet'] if 'items' in result else None
-        # You can add more key-value pairs for other information like job details, college info, etc.
-    }
+        # Split the response into sections
+        sections = re.split(r'\n\d\.\s', text_response)
+        if sections[0] == '':
+            sections.pop(0)  # Remove the first element if it's empty or does not contain useful info
+
+        additional_info = {'sections': sections}
+
+    except Exception as e:
+        additional_info = {
+            'sections': [f"An error occurred: {str(e)}"]  # Wrap the error message in a list for consistency
+        }
+
     return additional_info

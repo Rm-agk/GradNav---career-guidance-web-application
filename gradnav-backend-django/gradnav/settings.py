@@ -137,4 +137,5 @@ CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Add this line
-OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+OPENAI_API_KEY = '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'
+
