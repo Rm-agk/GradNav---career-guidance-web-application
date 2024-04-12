@@ -4,11 +4,76 @@
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
 {% block content %}
+<style>
+    /* Custom form styles */
+.custom-form {
+    max-width: 1200px; /* Adjust based on your preference */
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd; /* Light grey border */
+    border-radius: 8px; /* Rounded corners */
+    background-color: #f9f9f9; /* Light background */
+}
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Calculate Points</button>
-</form>
+.custom-form p {
+    margin: 0 0 1em; /* Spacing between form fields */
+}
+
+.custom-form label {
+    display: block;
+    margin-bottom: .5em; /* Space below the label */
+    color: #333; /* Dark grey text for better readability */
+    font-size: 16px; /* Larger font size for labels */
+}
+
+.custom-form input,
+.custom-form select,
+.custom-form textarea {
+    width: 100%; /* Full width */
+    padding: 8px; /* Padding inside the fields */
+    margin-bottom: 20px; /* Space below each field */
+    border: 1px solid #ccc; /* Light grey border */
+    border-radius: 4px; /* Rounded corners for fields */
+    box-sizing: border-box; /* Border box sizing */
+}
+
+.submit-btn {
+    background-color: #0056b3; /* Bootstrap primary color */
+    color: white; /* White text */
+    padding: 10px 20px; /* Padding inside the button */
+    border: none; /* No border */
+    border-radius: 5px; /* Slightly rounded corners for the button */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 18px; /* Larger font size for the button */
+    transition: background-color 0.3s ease; /* Smooth background color transition */
+}
+
+.submit-btn:hover {
+    background-color: #003d7a; /* Darker shade on hover */
+}
+
+</style>
+
+<div class="wrapper style1">
+
+    <div class="container">
+        <article id="main" class="special">
+            <header>
+                <h2>CAO Calculator</h2>
+                <p>
+                    Whatever You Calculate is Not Final! <br> (But it Will Help You Set Goals)
+                </p>
+            </header>
+            <img src="{% static 'images/student22.jpg' %}" class="image featured"/>
+
+            <form method="post" class="custom-form">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="submit-btn">Calculate Points</button>
+            </form>
+        </article>
+    </div>
+</div>
+
 
 {% endblock content %}

@@ -1,37 +1,131 @@
 {% extends 'index.html' %}
+{% load static %}
 {% block title %}About Us - gradnav{% endblock title %}
 
 {% block content %}
-
-<h1 class="display-4 text-center my-5">About Us</h1>
-
 <main>
-    <div class="container col-md-8 col-sm-12">
-        <section class="app-description">
-            <h2>Welcome to GradNav</h2>
-            <p>
-                Welcome to GradNav
-                Explore the world of career guidance and educational opportunities with GradNav, 
-                your go-to web app for personalized insights and information. 
-                Join us to embark on a journey of self-discovery and informed decision-making.
-                How It Works
-                GradNav provides a seamless and user-friendly experience, empowering you to:
-            </p>
-        </section>
+    			<!-- Main -->
+				<div class="wrapper style1">
 
-        <section class="how-it-works">
-            <h2>How It Works</h2>
-            <p>
-                GradNav offers a simple and intuitive user interface that provides you with:
-            </p>
-            <ul>
-                <li>Comprehensive career guidance</li>
-                <li>Personalised recommendations based on user profiles</li>
-                <li>Real-time updates on college applications, scholarships, and courses</li>
-                <li>Engaging competitive quizzes for knowledge challenges and progress tracking in other potetntial career paths</li>
-            </ul>
-        </section>
-    </div>
+					<div class="container">
+						<div class="row gtr-200">
+							<div class="col-8 col-12-mobile" id="content">
+								<article id="main">
+									<header>
+										<h2>About Us</h2>
+										<p>
+											This is Who We Are
+										</p>
+									</header>
+									<img src="{% static 'images/student3.jpg' %}" class="image featured">
+									<p>
+										Martins Ejike and Stephanie Ulogwara, the founders of GradNav, share a common passion for empowering
+                                        Irish students and bridging the gap between education and career success. Their journey began during 
+                                        their Leaving Certificate in 2020, where they both encountered the daunting task of choosing Irish courses 
+                                        and navigating the uncertain terrain of post-graduation prospects in Ireland. Fueled by their own experiences 
+                                        and the desire to make a difference, Martins and Stephanie embarked on a mission to create GradNav—a 
+                                        platform that would provide Irish students with the guidance and support they wish they had during their own 
+                                        educational journey. With their combined expertise and dedication, Martins and Stephanie are committed 
+                                        to helping Irish students across Ireland embark on their academic and Irish career paths with clarity, confidence, and purpose.
+									</p>
+									<section>
+										<header>
+											<h3>Commitment to Continuous Improvement</h3>
+										</header>
+										<p>
+											At GradNav, we're dedicated to constantly evolving and improving our platform to better serve the needs of 
+                                            Irish students. We value user feedback immensely and use it as a driving force behind our development efforts. 
+                                            By listening to the experiences and suggestions of our users, we're able to implement enhancements 
+                                            and new features that address their evolving needs and challenges. Our commitment to continuous improvement 
+                                            ensures that GradNav remains a reliable and innovative resource for Irish students, empowering them to navigate 
+                                            their educational journey with confidence and success.
+										</p>
+										<p>
+											Through our ongoing commitment to excellence and user-centric approach, GradNav strives to be the indispensable 
+                                            companion for Irish students as they embark on their educational and Irish career endeavors. Join us on this journey of 
+                                            empowerment and discovery, and let GradNav guide you towards an Irish future filled with promise and opportunity.
+										</p>
+									</section>
+									<section>
+										<header>
+											<h3>Expansion Plans</h3>
+										</header>
+										<p>
+											Looking ahead, GradNav is excited to embark on a journey of expansion and growth. We envision 
+                                            broadening our reach to serve even more Irish students across Ireland and beyond, extending our support 
+                                            to individuals at every stage of their educational and Irish career journey. With new features, partnerships, 
+                                            and initiatives on the horizon, GradNav is committed to continuously evolving and innovating to meet 
+                                            the diverse needs of our users. Join us as we expand our horizons and empower ~ Irish students to achieve 
+                                            their full potential.
+										</p>
+									</section>
+								</article>
+							</div>
+							<div class="col-4 col-12-mobile" id="sidebar">
+								<hr class="first" />
+								<section>
+									<header>
+										<h3>CAO Calculator</h3>
+									</header>
+									<p>
+										Our on-site CAO calculator simplifies college applications by instantly computing 
+                                        your CAO points based on Leaving Certificate results, helping you make informed 
+                                        decisions about course choices within Ireland. Our CAO calculator empowers you to explore options 
+                                        confidently and make well-informed decisions about your academic future.
+									</p>
+									<footer>
+										<a href="{% url 'calculate' %}" target="_blank" class="button">Check it Out</a>
+									</footer>
+								</section>
+								<hr />
+								<section>
+									<div class="row gtr-50">
+										<div class="col-4">
+										    <img src="{% static 'images/student13.jpg' %}" class="image fit" class="image featured">
+										</div>
+										<div class="col-8">
+											<h4>The GradNav Chatbot</h4>
+											<p>
+												GradNav's chatbot offers extended help and assistance 24/7, guiding you through any 
+                                                challenges you may encounter and providing support whenever you need it, ensuring 
+                                                you're never alone in your journey.
+											</p>
+										</div>
+										<div class="col-4">
+											<img src="{% static 'images/student8.jpg' %}" class="image fit" class="image featured">
+										</div>
+										<div class="col-8">
+											<h4>Personalised Insights</h4>
+											<p>
+												GradNav offers personalized course and career options in Ireland tailored to your unique interests, skills, 
+                                                and aspirations, ensuring that you find the paths that align with your strengths and goals.
+											</p>
+										</div>
+										<div class="col-4">
+											<img src="{% static 'images/student19.jpg' %}" class="image fit" class="image featured">
+										</div>
+										<div class="col-8">
+											<h4>Informed Finanical Future</h4>
+											<p>
+												With GradNav's salary insights feature, you'll gain valuable information about the earning potential
+                                                associated with different Irish careers and industries, empowering you to make informed financial decisions 
+                                                about your future.
+											</p>
+										</div>
+										<div class="col-4">
+											<img src="{% static 'images/student7.jpg' %}" class="image fit" class="image featured">
+										</div>
+										<div class="col-8">
+											<h4>Personalised Profile</h4>
+											<p>
+											    With personalized profiles, GradNav offers customized recommendations and insights based on your 
+                                                individual strengths and aspirations, ensuring that your educational and career choices reflect your unique journey.
+											</p>
+										</div>
+									</div>
+								</section>
+							</div>
+						</div>
 </main>
 
 {% endblock content %}

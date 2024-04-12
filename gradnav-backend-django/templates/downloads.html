@@ -1,61 +1,162 @@
 {% extends 'index.html' %}
+{% load static %}
 {% block title %}Downloads - gradnav{% endblock title %}
 
 {% block content %}
-<h1 class="display-4 text-center my-5">Useful Links</h1>
+			<!-- Main -->
+            <div class="wrapper style1">
 
-<main>
-    <div class="container col-md-8 col-sm-12">
-        <div class="download-item mb-4">
-            <h2 class="">CAO Website</h2>
-            <p>The official website for the Central Applications Office where students can find information on courses, application procedures, points requirements, and more.</p>
-            <a href="https://www.cao.ie/" class="btn btn-primary" target=”_blank”>Visit Website</a>
-            <hr>
-        </div>
-        <div class="download-item mb-4">
-            <h2>CAO Points Calculator</h2>
-            <p>This tool helps students calculate their points based on their Leaving Certificate results and subject choices.</p>
-            <a href="https://www.cao.ie/index.php?page=points&p=2023" class="btn btn-primary" target=”_blank”>Calculate Points</a>
-            <hr>
-        </div>
-        <div class="download-item mb-4">
-            <h2>Course Search and Descriptions</h2>
-            <p>A comprehensive database of courses available in Ireland, with detailed descriptions, entry requirements, and links to relevant institutions.</p>
-            <a href="https://www.qualifax.ie/" class="btn btn-primary" target=”_blank”>Explore Courses</a>
-            <hr>
-        </div>
-        <div class="download-item mb-4">
-            <h2>Student Universal Support Ireland (SUSI)</h2>
-            <p>The centralised online application system for student grants in Ireland. Provides information and application forms for grants and financial support.</p>
-            <a href="https://susi.ie/" class="btn btn-primary" target=”_blank”>Visit SUSI</a>
-            <hr>
-        </div>
-        <div class="download-item mb-4">
-            <h2>Scholarship Opportunities</h2>
-            <p>Information on various scholarships available to students in Ireland, including eligibility criteria and application processes.</p>
-            <a href="https://www.studentfinance.ie/scholarships" class="btn btn-primary" target=”_blank”>Explore Scholarships</a>
-            <hr>
-        </div>
-        <div class="download-item mb-4">
-            <h2>Career Guidance Resources</h2>
-            <p>Provides comprehensive career guidance resources for students, including information on courses, career prospects, CV preparation, and interview tips.</p>
-            <a href="https://careersportal.ie/" class="btn btn-primary" target=”_blank”>Explore CareersPortal</a>
-            <hr>
-        </div>
-        <div class="download-item mb-4">
-            <h2>Examination and Results Information</h2>
-            <p>Official information on the state examinations in Ireland, including exam timetables, past papers, and examination regulations.</p>
-            <a href="https://www.examinations.ie/" class="btn btn-primary" target=”_blank”>Visit SEC</a>
-            <hr>
-        </div>
-        <div class="download-item mb-4">
-            <h2>Student Forums and Communities</h2>
-            <p>Websites like boards.ie often have dedicated sections for Leaving Cert students and those applying to college, where you can find advice, ask questions, and share experiences with others going through the same process.</p>
-            <a href="https://www.boards.ie/" class="btn btn-primary" target=”_blank”>Visit Boards Ireland</a>
-            <hr>
-        </div>
-    </div>
-    
-</main>
+                <div class="container">
+                    <div class="row gtr-200">
+                        <div class="col-4 col-12-mobile" id="sidebar">
+                            <hr class="first" />
+                            <section>
+                                <header>
+                                    <h3><a href="https://www.cao.ie/">CAO Website</a></h3>
+                                </header>
+                                <p>
+                                    CAO.ie is an online platform facilitating undergraduate course applications in Ireland, 
+                                    while GradNav serves as a pre-application tool, assisting Leaving Certificate students 
+                                    in exploring suitable courses and career paths based on their interests and skills. 
+                                    Together, they provide a comprehensive approach to educational guidance, with CAO.ie 
+                                    managing the application process and GradNav aiding students in making informed decisions 
+                                    before applying.
+                                </p>
+                                <footer>
+                                    <a href="https://www.cao.ie/?page=haq" class="btn btn-primary" target="_blank" class="button">Learn More</a>
+                                </footer>
+                            </section>
+                            <hr />
+                            <section>
+                                <header>
+                                    <h3>Other Helpful Links</h3>
+                                </header>
+                                <div class="row gtr-50">
+                                    <div class="col-4">
+                                        <a href="https://susi.ie/" class="image fit"><img src="{% static 'images/student12.jpg' %}"></a>
+                                    </div>
+                                    <div class="col-8">
+                                        <a href="https://susi.ie/" class="btn btn-primary" target=”_blank”>Visit SUSI</a>
+                                        <p>
+                                            The centralised online application system for student grants in Ireland. 
+                                        </p>
+                                    </div>
+                                    <div class="col-4">
+                                        <a href="https://www.qualifax.ie/" class="image fit"><img src="{% static 'images/student13.jpg' %}"></a>
+                                    </div>
+                                    <div class="col-8">
+                                        <a href="https://www.qualifax.ie/" class="btn btn-primary" target=”_blank”>Explore Scholarships</a>
+                                        <p>
+                                            GradNav likes to complement Qualifax by offering further 
+                                            personalized guidance for students who are navigating educational options in Ireland.
+                                        </p>
+                                    </div>
+                                    <div class="col-4">
+                                        <a href="https://www.examinations.ie/" class="image fit"><img src="{% static 'images/student4.jpg' %}"></a>
+                                    </div>
+                                    <div class="col-8">
+                                        <a href="https://www.examinations.ie/" class="btn btn-primary" target=”_blank”>Visit SEC</a>
+                                        <p>
+                                            Because GradNav provides personalized guidance for students, 
+                                            it complements Examinations.ie's resources on the Irish education system for further research.
+                                        </p>
+                                    </div>
+                                    <div class="col-4">
+                                        <a href="https://www.boards.ie/" class="image fit"><img src="{% static 'images/student7.jpg' %}"></a>
+                                    </div>
+                                    <div class="col-8">
+                                        <a href="https://www.boards.ie/" class="btn btn-primary" target=”_blank”>Visit Boards Ireland</a>
+                                        <p>
+                                            Websites like boards.ie often have dedicated sections for Leaving Cert students and those applying to college
+                                        </p>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="col-8 col-12-mobile imp-mobile" id="content">
+                            <article id="main">
+                                <header>
+                                    <h3>Further Career Resources</h3>
+                                    <p>
+                                        Before You Jump into College!
+                                    </p>
+                                </header>
+                                <a href="#" class="image featured"><img src="{% static 'images/student3.jpg' %}"></a>
+                                <section>
+                                    <header>
+                                        <h3>What is the Further Resources Scetion?</h3>
+                                    </header>
+                                    <p>
+                                        Preparation is key, and GradNav's "Further Resources" page is your ultimate toolkit. 
+                                        With financial aid info, personalized guidance, exam insights, and a supportive community, 
+                                        you're set to tackle your educational journey with confidence.
+                                    </p>
+                                </section>
+                                <section>
+                                    <header>
+                                        <h3>Why Further Resources?</h3>
+                                    </header>
+                                    <p>
+                                        GradNav's "Further Resources" page isn't just your average add-on—it's your 
+                                        secret weapon for conquering the maze of educational decisions! Imagine having 
+                                        a personalized guide at your fingertips, tailored to your interests and skills, 
+                                        but that's just the beginning. We know how crucial financial aid can be, so we've
+                                        hooked you up with the central hub for student grants in Ireland—SUSI—right there on 
+                                        the page. Plus, ever felt like you needed more than just a nudge in the right direction? 
+                                    <p>
+                                        That's where Qualifax comes in, offering you even more personalized guidance for your journey.
+                                        And let's not forget about Examinations.ie—your go-to source for cracking the code 
+                                        of the Irish education system. But hey, we get it, sometimes you need a little extra 
+                                        boost from your fellow students, which is why we've included links to boards.ie, where 
+                                        you can tap into a community of peers who've been there, done that, and are ready to share 
+                                        their wisdom with you. So go ahead, dive into GradNav's "Further Resources" page—it's your 
+                                        key to unlocking a world of opportunities and making those big decisions with confidence!
+                                    </p>
+                                </section>
+                            </article>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                            <article class="col-4 col-12-mobile special">
+                              <a href="#" class="image featured"><img src="{% static 'images/student7.jpg' %}" alt="My image"></a>
+                              <header>
+                                <h3><a href="#">St. Andrew's School - March 15, 2023</a></h3>
+                              </header>
+                              <p>
+                                GradNav transformed our 2023 Leaving Cycle students' approach to their futures, 
+                                instilling confidence and clarity. Its guidance sparked
+                                excitement about their educational paths. 
+                                A true asset to both students and educators, GradNav earns five stars from St. Andrew's.
+                                Highly recommended for empowering students.
+                              </p>
+                            </article>
+                            <article class="col-4 col-12-mobile special">
+                              <a href="#" class="image featured"><img src="{% static 'images/student8.jpg' %}" alt="My image"></a>
+                              <header>
+                                <h3><a href="#">Mercy Chinwe - June 2, 2023</a></h3>
+                              </header>
+                              <p>
+                                I was so overwhelmed with the pressure of choosing a future path, 
+                                especially with my interest in medicine which seemed like a distant dream. 
+                                GradNav provided clarity but also personalized guidance that mirrored 
+                                my strengths and aspirations. I now see a clear direction laid out 
+                                that feels achievable and real! 
+                              </p>
+                            </article>
+                            <article class="col-4 col-12-mobile special">
+                              <a href="#" class="image featured"><img src="{% static 'images/student9.jpg' %}" alt="My image"></a>
+                              <header>
+                                <h3><a href="#">David Murphy - September 9, 2023</a></h3>
+                              </header>
+                              <p>
+                                Bought GradNav for my son, who was convinced college wasn't for him, 
+                                believing no course could match his interests. The platform proved him wrong, 
+                                unveiling paths he'd never considered. Now, he's excited about his university prospects. 
+                                A game-changer for any parent. Five stars!
+                  </div>
+                  <br />
+
+            </div>
 
 {% endblock content %}

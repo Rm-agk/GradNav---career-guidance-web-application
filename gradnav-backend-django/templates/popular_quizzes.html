@@ -1,12 +1,58 @@
 {% extends 'index.html' %}
+{% load static %}
 
 {% block title %}@{{ request.user.username }} Popular Quizzes - gradnav{% endblock title %}
 
+{% block additional_css %}
+<link rel="stylesheet" href="{% static 'css/main2.css' %}"/>
+{% endblock %}
+
 {% block content %}
 <!-- Add the search form here if needed -->
-
 <div class="container">
-    <h1 class="text-center mt-5 mb-4">Most Popular Courses</h1>
+    <h2 class="text-center mt-5 mb-4" style="font-size: 50px;">Most Popular Courses</h2>
+
+    					<!-- Three -->
+						<section class="wrapper style3 container special">
+
+							<header class="major">
+								<h2>It's not a Popularity <strong>Contest!</strong></h2>
+							</header>
+
+							<div class="row">
+								<div class="col-6 col-12-narrower">
+
+									<section>
+										<img src="{% static 'images/student2.jpg' %}" class="image featured">
+										<header>
+											<h3>The Purpose</h3>
+										</header>
+										<p>At GradNav, we understand the importance of making informed decisions about your future, which is why we've introduced the Most Popular Course page. This feature showcases the top six most looked-at careers by other users on our website, providing valuable insights into trending fields and areas of interest among students like you.</p>
+									</section>
+
+								</div>
+								<div class="col-6 col-12-narrower">
+
+									<section>
+										<img src="{% static 'images/student12.jpg' %}" class="image featured">
+										<header>
+											<h3>The End Goal</h3>
+										</header>
+										<p>Overall, the Most Popular Course page enhances the GradNav experience by providing valuable insights, fostering peer engagement, and supporting informed decision-making about your educational and career journey's in Ireland. However, don't feel pressured to want the same things! This is just to help with direction.</p>
+									</section>
+
+								</div>
+							</div>
+
+							<footer class="major">
+								<ul class="buttons">
+									<li><a href="{% url 'all_quiz' %}" class="button">See All Career Quizzes</a></li>
+								</ul>
+							</footer>
+
+						</section>
+
+				</article>
 
     <div class="row row-cols-1 row-cols-md-3 g-4">
         <!-- Display popular quizzes -->
@@ -27,6 +73,100 @@
         </div>
         {% endfor %}
     </div>
-</div>
 
+			<!-- Main -->
+				<article id="main">
+
+					<header class="special container">
+						
+						<h2>Soo..are there <strong>Benefits </strong>to this information?
+						<br />
+						I decided to give it a really creative name.</h2>
+						<p>The<strong> Most Popular Course</strong> page on GradNav offers a range of advantages. It provides trend awareness,
+                        peer insights, and validation by showcasing popular courses. Users can explore trending fields and specific career options, 
+						aiding decision-making. Additionally, the page fosters user engagement and community interaction, promoting support and growth within the GradNav community.</p>
+                        <span class="icon solid fa-chart-bar"></span>
+					</header>
+
+					<!-- One -->
+						<section class="wrapper style2 container special-alt">
+							<div class="row gtr-50">
+								<div class="col-8 col-12-narrower">
+
+									<header>
+										<h2>
+                                            Goals of <strong> the Most Popular </strong>Course Page!</h2>
+									</header>
+									<p>The Most Popular Course page on GradNav serves as a dynamic hub for users to gain insights 
+                                        into trending career paths and make informed decisions about their future. By showcasing popular 
+                                        courses and fields of interest among peers, the page fosters a sense of community and facilitates
+                                        peer-to-peer learning. It aims to inspire exploration, validate career choices, and provide 
+                                        valuable guidance to users navigating their educational and career journeys. Ultimately, the 
+                                        page seeks to empower users with the knowledge and confidence to pursue paths aligned with their 
+                                        interests and aspirations. Through engagement 
+                                        and interaction, the page encourages collaboration and collective knowledge sharing, empowering users 
+                                        to chart their course towards success with confidence and clarity.
+                                    </p>
+									<footer>
+										<ul class="buttons">
+											<li><a href="{% url 'all_quiz' %}" class="button">Take a Quiz</a></li>
+										</ul>
+									</footer>
+
+								</div>
+								<div class="col-4 col-12-narrower imp-narrower">
+
+									<ul class="featured-icons">
+										<li><span class="icon fa-clock"><span class="label">Feature 1</span></span> Provide timely insights into current trends and popular career paths among users.</li>
+										<li><span class="icon solid fa-graduation-cap"><span class="label">Feature 2</span></span> Inspire exploration and discovery of new academic and career opportunities.</li>
+										<li><span class="icon solid fa-user"><span class="label">Feature 3</span></span> Facilitate peer-to-peer learning and knowledge sharing.</li>
+										<li><span class="icon solid fa-lock"><span class="label">Feature 4</span></span> Validate and provide confidence and security in chosen career paths through popularity indicators.</li>
+										<li><span class="icon solid fa-search"><span class="label">Feature 5</span></span>Serve as a valuable resource for users navigating the complexities of career decision-making.</li>
+                                        <li><span class="icon solid fa-graduation-cap"><span class="label">Feature 6</span></span>Foster engagement and interaction within the GradNav community.</li>
+									</ul>
+
+								</div>
+							</div>
+						</section>
+
+					<!-- Two -->
+						<section class="wrapper style1 container special">
+							<div class="row">
+								<div class="col-4 col-12-narrower">
+
+									<section>
+										<span class="icon solid featured fa-check"></span>
+										<header>
+											<h3>Quality Assurance</h3>
+										</header>
+										<p style="text-align: center;">GradNav promises to uphold high standards of quality for quizzes featured on the Popular Quizzes page, ensuring that each assessment offers valuable insights and guidance for users exploring career paths and educational options.</p>
+									</section>
+
+								</div>
+								<div class="col-4 col-12-narrower">
+
+									<section>
+										<span class="icon solid featured fa-check"></span>
+										<header>
+											<h3>Relevance and Diversity</h3>
+										</header>
+										<p style="text-align: center;">We guarantee a diverse selection of quizzes covering a wide range of interests and industries, catering to the diverse needs and aspirations of our users.</p>
+									</section>
+
+								</div>
+								<div class="col-4 col-12-narrower">
+
+									<section>
+										<span class="icon solid featured fa-check"></span>
+										<header>
+											<h3>User Engagement</h3>
+										</header>
+										<p style="text-align: center;">GradNav promises to foster user <br>engagement and interaction around <br> the Popular Quizzes page, providing <br> a platform for users to share their quiz <br>insights, & recommendations with <br>the community.</p>
+									</section>
+
+								</div>
+							</div>
+						</section>
+</div>
+<script type="text/javascript" src="{% static 'js/main2.js' %}"></script>
 {% endblock content %}
