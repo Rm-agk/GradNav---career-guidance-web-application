@@ -46,39 +46,65 @@ def search_view(request, category):
     context = {"user_profile": user_profile, "quizzes": quizzes, "categories": categories}
     return render(request, 'all-quiz.html', context)
 
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from account.models import Profile
+from .models import Quiz, QuizSubmission
+
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .models import User, Quiz, QuizSubmission
+
 @login_required(login_url='login')
 def quiz_view(request, quiz_id):
-
     user_object = User.objects.get(username=request.user)
     user_profile = Profile.objects.get(user=user_object)
-
     quiz = Quiz.objects.filter(id=quiz_id).first()
-
     total_questions = quiz.question_set.all().count()
 
-    if request.method == "POST":
-        
-        # Get the score
-        score = int(request.POST.get('score', 0))
-
-        # Check if the user has already submiited the quiz
-        if QuizSubmission.objects.filter(user=request.user, quiz=quiz).exists():
-            messages.success(request, f"This time you got {score} out of {total_questions}")
-            return redirect('quiz', quiz_id)
-        
-        # save the new quiz submission
-        submission = QuizSubmission(user=request.user, quiz=quiz, score=score)
-        submission.save()
-
-        # show the result in message
-        messages.success(request,f"Quiz Submitted Successfully. You got {score} out of {total_questions}")
-        return redirect('quiz', quiz_id)
-
-    if quiz != None:
-        context = {"user_profile": user_profile, "quiz": quiz}
-    else:
+    # This check ensures that the quiz exists before proceeding
+    if not quiz:
+        messages.error(request, "The requested quiz does not exist.")
         return redirect('all_quiz')
+
+    if request.method == "POST":
+        score = int(request.POST.get('score', 0))
+        
+        # Check if the user has already submitted this quiz and update the score
+        submission, created = QuizSubmission.objects.update_or_create(
+            user=request.user, 
+            quiz=quiz, 
+            defaults={'score': score}
+        )
+        
+        # Provide feedback to the user based on the score
+        if score >= 5:
+            # Set the session variable to true to indicate that the additional information should be displayed
+            request.session['display_additional_info'] = True
+            messages.success(request, f"You scored {score} out of {total_questions}. Click below to get more information.")
+        else:
+            # If the score is less than 5, inform the user they are not recommended for the course
+            messages.info(request, f"You scored {score} out of {total_questions}. You are not recommended for the course.")
+        
+        # Redirect to the same quiz page to display the messages
+        return redirect('quiz', quiz_id=quiz_id)
+
+    # If it's a GET request, display the quiz
+    # The display_additional_info is popped from the session to check if the button should be displayed
+    context = {
+        "user_profile": user_profile,
+        "quiz": quiz,
+        "total_questions": total_questions,
+        # The pop method will remove the display_additional_info from the session after accessing its value
+        "display_additional_info": request.session.pop('display_additional_info', False)
+    }
     return render(request, 'quiz.html', context)
+
+
+
+
 
 from django.shortcuts import render
 from .models import Quiz
@@ -126,6 +152,14 @@ import openai
 import re
 from django.conf import settings
 
+import openai
+import re
+from django.conf import settings
+
+import openai
+import re
+from django.conf import settings
+
 def get_additional_info(quiz_title):
     openai.api_key = settings.OPENAI_API_KEY
 
@@ -138,15 +172,21 @@ def get_additional_info(quiz_title):
 """
 
     try:
-        response = openai.Completion.create(
-            engine="gpt-3.5-turbo-instruct",
-            prompt=prompt,
+        client = openai.OpenAI()  # Initialize the OpenAI client
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[{"role": "user", "content": prompt}],
             temperature=0.5,
-            max_tokens=1000,
-            n=1,
-            stop=None
+            max_tokens=1000
         )
-        text_response = response.choices[0].text.strip()
+
+        # Assuming the response object has a method to convert to dictionary if it's not directly subscriptable
+        if hasattr(response, 'to_dict'):
+            response_data = response.to_dict()
+        else:
+            response_data = response
+
+        text_response = response_data['choices'][0]['message']['content'].strip()
 
         # Split the response into sections
         sections = re.split(r'\n\d\.\s', text_response)
@@ -161,6 +201,10 @@ def get_additional_info(quiz_title):
         }
 
     return additional_info
+
+
+
+
 
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
@@ -202,3 +246,53 @@ def get_recommendations(request):
         # Handle unexpected method
         return JsonResponse({"error": "Method not allowed"}, status=405)
 
+from django.shortcuts import render
+from django.http import HttpResponse, HttpResponseRedirect
+from django.conf import settings
+from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+import openai
+
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib import messages
+from django.conf import settings
+import openai
+
+@login_required
+def display_additional_info(request, quiz_title):
+    # Ensure the user has scored enough to access this view.
+    # If not, redirect them and show a warning message.
+    if not request.session.get('display_additional_info', False):
+        messages.warning(request, "Take the Quiz!, You are not recommended this career yet")
+        # Redirect to the detailed quiz view.
+        return redirect('quiz_details', quiz_title=quiz_title)
+
+    # Clear the session variable after checking it.
+    del request.session['display_additional_info']
+
+    # OpenAI API call logic
+    openai.api_key = settings.OPENAI_API_KEY
+    prompt = f"""
+Given the quiz title '{quiz_title}', provide the following information:
+1. Related job opportunities and their descriptions and personality types that suit the role.
+2. Bachelor's degree courses available in Ireland related to the quiz topic and what colleges they can be studied in with points to match.
+3. Salary insights for jobs related to the quiz topic.
+4. Nearby accommodation options for students based on the courses recommended.
+5. Any other relevant information.
+"""
+    try:
+        response = openai.Completion.create(
+            engine="gpt-3.5-turbo",
+            prompt=prompt,
+            temperature=0.5,
+            max_tokens=1000
+        )
+        text_response = response.choices[0].message['content'].strip()
+    except Exception as e:
+        messages.error(request, f"An error occurred while retrieving additional information: {e}")
+        return redirect('quiz_details', quiz_title=quiz_title)
+
+    # Return the additional information as an HttpResponse
+    return HttpResponse(text_response, content_type="text/plain")
