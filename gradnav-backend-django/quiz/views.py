@@ -161,3 +161,44 @@ def get_additional_info(quiz_title):
         }
 
     return additional_info
+
+from django.http import JsonResponse
+from django.views.decorators.http import require_http_methods
+from django.views.decorators.csrf import csrf_exempt
+from .utils import generate_chatgpt_prompt
+from django.contrib.auth.decorators import login_required
+import openai
+from django.conf import settings
+
+# Ensure OpenAI client is initialized (as shown above)
+client = openai.OpenAI(api_key=settings.OPENAI_API_KEY)
+
+
+@login_required
+@csrf_exempt  # Consider security implications in production
+def get_recommendations(request):
+    # This endpoint might be adapted to POST if fetching dynamic user data
+    if request.method == "GET":
+        # Generate the comprehensive prompt from the user's profile and quiz responses
+        prompt = generate_chatgpt_prompt(request.user)
+
+        try:
+            # Create chat completion with OpenAI
+            chat_completion = client.chat.completions.create(
+                model="gpt-3.5-turbo",  # Adjust the model name as necessary
+                messages=[
+                    {"role": "system", "content": "You are a knowledgeable assistant asked to provide course and career recommendations."},
+                    {"role": "user", "content": prompt}
+                ]
+            )
+            # Extract the recommendations from the response
+            recommendations = chat_completion.choices[0].message.content  # Ensure this matches the actual response structure
+        except Exception as e:
+            recommendations = f"An error occurred: {str(e)}"
+
+        # Assuming you want to return the recommendations to be displayed on a webpage
+        return render(request, 'recommendations.html', {'recommendations': recommendations})
+    else:
+        # Handle unexpected method
+        return JsonResponse({"error": "Method not allowed"}, status=405)
+

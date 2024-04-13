@@ -1,0 +1,28 @@
+{% extends 'index.html' %}
+
+{% block title %}Register: Hobbies{% endblock title %}
+
+{% block content %}
+
+<h1 class="display-4 text-center my-5">Select Your Hobbies</h1>
+
+<div class="container">
+    <form method="POST" action="">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="col-form-label pt-0">Hobbies:</legend>
+            {% for hobby in form.hobbies.field.queryset %}
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="hobbies" value="{{ hobby.id }}" id="hobby{{ hobby.id }}"
+                       {% if hobby.id in form.hobbies.value %} checked {% endif %}>
+                <label class="form-check-label" for="hobby{{ hobby.id }}">
+                    {{ hobby.name }}
+                </label>
+            </div>
+            {% endfor %}
+        </fieldset>
+        <button type="submit" class="btn btn-primary mt-2">Next</button>
+    </form>
+</div>
+
+{% endblock content %}

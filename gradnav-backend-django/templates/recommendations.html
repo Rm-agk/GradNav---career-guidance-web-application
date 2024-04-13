@@ -1,0 +1,29 @@
+<!-- quiz/templates/quiz/recommendations.html -->
+
+{% extends 'index.html' %} <!-- Ensure this is extending the correct base template -->
+
+{% block head %}
+<!-- If your base template has a block for extra head content, include Bootstrap here if it's not already globally included -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+    .recommendations-container {
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-radius: 5px;
+        margin-top: 20px;
+    }
+    .recommendations-content {
+        white-space: pre-line; /* Ensures that line breaks in the recommendations string are respected */
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Course and Career Recommendations</h2>
+    <div class="recommendations-container">
+        <!-- Using the "pre" tag to respect the formatting of the recommendations string -->
+        <p class="recommendations-content">{{ recommendations | linebreaksbr }}</p>
+    </div>
+</div>
+{% endblock %}

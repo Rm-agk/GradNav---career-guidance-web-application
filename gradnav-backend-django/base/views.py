@@ -218,39 +218,48 @@ def calculate_points(request):
     return render(request, 'calculate.html', {'form': form})
 
 
-##CHATBOT VIEW
-from django.shortcuts import render
 from django.http import JsonResponse
-import openai
-from django.conf import settings
-from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
-from django.utils.decorators import method_decorator
-from django.views import View
+from django.views.decorators.csrf import csrf_exempt
+import requests
+from django.conf import settings
 
-# Initialize the OpenAI client with your API key
-client = openai.api_key = settings.OPENAI_API_KEY
-
-@csrf_exempt  # Use csrf_exempt for demonstration purposes only
+@csrf_exempt  # CSRF exemption for demonstration purposes only
 @require_http_methods(["POST"])  # Ensure this view only accepts POST requests
 def chat_with_gpt(request):
-    # Extract user message from the AJAX POST request
+    # Extract the user message from the AJAX POST request
     user_message = request.POST.get("message")
-
+    
+    # Prepare the API URL and headers
+    url = "https://api.openai.com/v1/chat/completions"
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {settings.OPENAI_API_KEY}"
+    }
+    
+    # Prepare the data to be sent in the POST request
+    data = {
+        "model": "gpt-3.5-turbo",
+        "messages": [{"role": "user", "content": user_message}],
+        "temperature": 0.7
+    }
+    
     try:
-        # Create chat completion with OpenAI
-        chat_completion = client.chat.completions.create(
-            messages=[{"role": "user", "content": user_message}],
-            model="gpt-3.5-turbo-0125"  # Adjust the model name as necessary
-        )
-        # Extract the response
-        # Ensure proper access to the message content based on API response structure
-        chat_response = chat_completion.choices[0].message.content  # Adjusted access method
+        # Make the POST request to the OpenAI API
+        response = requests.post(url, json=data, headers=headers)
+        response_data = response.json()
+        
+        # Extract the chat response
+        if response.status_code == 200:
+            chat_response = response_data['choices'][0]['message']['content']
+        else:
+            chat_response = "Failed to get response from OpenAI API"
     except Exception as e:
         chat_response = f"An error occurred: {str(e)}"
 
     # Return the chatbot's response in JSON format
     return JsonResponse({"response": chat_response})
+
 
 
 def popular_quizzes(request):

@@ -1,0 +1,28 @@
+{% extends 'index.html' %}
+
+{% block title %}Register: Wants and Needs{% endblock title %}
+
+{% block content %}
+
+<h1 class="display-4 text-center my-5">Select Your Wants and Needs</h1>
+
+<div class="container">
+    <form method="POST" action="">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="col-form-label pt-0">Wants and Needs:</legend>
+            {% for want_need in form.wants_needs.field.queryset %}
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="wants_needs" value="{{ want_need.id }}" id="wantneed{{ want_need.id }}"
+                       {% if want_need.id in form.wants_needs.value %} checked {% endif %}>
+                <label class="form-check-label" for="wantneed{{ want_need.id }}">
+                    {{ want_need.name }}
+                </label>
+            </div>
+            {% endfor %}
+        </fieldset>
+        <button type="submit" class="btn btn-primary mt-2">Next</button>
+    </form>
+</div>
+
+{% endblock content %}

@@ -32,6 +32,9 @@ class Quiz(models.Model):
         if self.quiz_file:
             self.import_quiz_from_excel()
 
+    def __str__(self):
+        return self.title
+
     # function to extract excel file
     def import_quiz_from_excel(self):
         # read teh excel file
