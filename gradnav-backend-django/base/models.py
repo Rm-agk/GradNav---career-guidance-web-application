@@ -2,7 +2,7 @@ from django.db import models
 from ckeditor.fields import RichTextField
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from quiz.models import QuizSubmission
+from quiz.models import *
 import pandas as pd
 
 # Create your models here.

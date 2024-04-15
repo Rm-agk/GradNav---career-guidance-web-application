@@ -1,69 +1,125 @@
 {% extends 'index.html' %}
 
-{% block title %}@{{user_profile2.user.username}}'s Profile - gradnav{% endblock title %}
+{% block title %}@{{ user_profile.user.username }}'s Profile - gradnav{% endblock title %}
 
 {% block content %}
+<h1 class="display-4 text-center my-5">{{ user_profile.user.username }}'s Profile</h1>
+<div class="mb-3">
+    {% for message in messages %}
+    <h5 class="text-{{ message.level_tag }} text-center">{{ message }}</h5>
+    {% endfor %}
+</div>
+<div class="container text-center">
+    {% if request.user.username == user_profile.user.username %}
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <a href="{% url 'edit_profile' %}" type="button" class="btn btn-outline-primary">Edit</a>
+        <a href="{% url 'delete_profile' %}" type="button" class="btn btn-outline-danger">Delete</a>
+    </div>
+    {% endif %}
 
-    <h1 class="display-4 text-center my-5">@{{user_profile2.user.username}}'s Profile</h1>
-    <div class="mb-3">
-        {% for message in messages %}
-        <h5 class="text-{{message.level_tag}} text-center">{{message}}</h5>
-        {% endfor %}
-      </div>
-    <div class="container text-center">
-        {% if request.user.username == user_profile2.user.username %}
-        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-            <a href="{% url 'edit_profile' %}" type="button" class="btn btn-outline-primary">Edit</a>
-            <a href="{% url 'delete_profile' %}" type="button" class="btn btn-outline-danger">Delete</a>
-        </div>
-        {% endif %}
-
-        <div class="container text-center my-4">
-            <div class="row row-cols-sm-1 row-cols-md-2">
-                <div class="col-12">
-                    <img src="{{user_profile2.profile_img.url}}" alt="user-profile" class="rounded-circle" width="150" height="150">
-                    <h2 class="fs-3">@{{user_profile2.user.username}}</h2>
-                </div>
-                <div class="col-12">
-                    <h2>{{user_profile2.user.first_name|default:"Full name not available"}} {{user_profile2.user.last_name}}</h2>
-                    <p class="fs-5"><i class="bi bi-gender-ambiguous"></i> {{user_profile2.gender|default:'Gender Not Available'}}</p>
-                    <p class="fs-5"><i class="bi bi-geo-alt-fill"></i> {{user_profile2.location|default:'Location Not Available'}}</p>
-                    <p class="fs-5"><i class="bi bi-file-person"></i> {{user_profile2.bio|default:'Bio Not Available'}}</p>
-                    {% if request.user.is_superuser %}
-                    <p class="fs-5"><i class="bi bi-envelope-at"></i> <a href="mailto:{{user_profile2.user.email}}"> {{user_profile2.user.email|default:'Email Not Available'}}</a></p>
-                    {% endif %}
-                </div>
+    <div class="container text-center my-4">
+        <div class="row row-cols-sm-1 row-cols-md-2">
+            <div class="col-12">
+                <img src="{{ user_profile.profile_img.url }}" alt="user-profile" class="rounded-circle" width="150" height="150">
+                <h2 class="fs-3">@{{ user_profile.user.username }}</h2>
+            </div>
+            <div class="col-12">
+                <h2>{{ user_profile.user.first_name|default:"Full name not available" }} {{ user_profile.user.last_name }}</h2>
+                <p class="fs-5"><i class="bi bi-gender-ambiguous"></i> {{ user_profile.gender|default:'Gender Not Available' }}</p>
+                <p class="fs-5"><i class="bi bi-geo-alt-fill"></i> {{ user_profile.location|default:'Location Not Available' }}</p>
+                <p class="fs-5"><i class="bi bi-file-person"></i> {{ user_profile.bio|default:'Bio Not Available' }}</p>
+                {% if request.user.is_superuser %}
+                <p class="fs-5"><i class="bi bi-envelope-at"></i> <a href="mailto:{{ user_profile.user.email }}">{{ user_profile.user.email|default:'Email Not Available' }}</a></p>
+                {% endif %}
             </div>
         </div>
+    <hr class="my-5">
+    <a href="{% url 'get_recommendations' %}" class="d-inline-flex align-items-center btn btn-primary btn-lg px-4">
+        View Another Recommendation
+      </a>
+    </div>
 
-        <hr class="my-5">
+    <!-- Skills Section -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h3>Skills</h3>
+                <ul class="list-group">
+                    {% for skill in user_profile.skills.all %}
+                    <li class="list-group-item">{{ skill.name }}</li>
+                    {% empty %}
+                    <li class="list-group-item">No skills listed.</li>
+                    {% endfor %}
+                </ul>
+            </div>
 
-        <div class="container">
-            <div class="row row-cols-sm-1 row-cols-md-1 row-cols-lg-1">
-                <div class="col-12">
-                    <h3>Quiz attended by @{{user_profile2.user.username}}</h3>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Quiz</th>
-                                <th scope="col">Marks</th>
-                                <th scope="col">Time</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for submission in submissions %}
-                            <tr>
-                                <th scope="row">{{forloop.counter}}</th>
-                                <td title="{{submission.quiz.title}}">{{submission.quiz.title|truncatewords:6}}</td>
-                                <td>{{submission.score}}/{{submission.quiz.question_set.all|length}}</td>
-                                <td>{{submission.submitted_at|timesince}} ago</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+            <div class="col-md-4">
+                <h3>Subjects</h3>
+                <ul class="list-group">
+                    {% for subject in user_profile.subjects.all %}
+                    <li class="list-group-item">{{ subject.name }}</li>
+                    {% empty %}
+                    <li class="list-group-item">No subjects listed.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="col-md-4">
+                <h3>Hobbies</h3>
+                <ul class="list-group">
+                    {% for hobby in user_profile.hobbies.all %}
+                    <li class="list-group-item">{{ hobby.name }}</li>
+                    {% empty %}
+                    <li class="list-group-item">No hobbies listed.</li>
+                    {% endfor %}
+                </ul>
             </div>
         </div>
     </div>
+    
+    <!-- More Profile Sections -->
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Character Traits</h3>
+                <ul class="list-group">
+                    {% for trait in user_profile.character_traits.all %}
+                    <li class="list-group-item">{{ trait.name }}</li>
+                    {% empty %}
+                    <li class="list-group-item">No character traits listed.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            
+            <div class="col-md-6">
+                <h3>Wants and Needs</h3>
+                <ul class="list-group">
+                    {% for want_need in user_profile.wants_needs.all %}
+                    <li class="list-group-item">{{ want_need.name }}</li>
+                    {% empty %}
+                    <li class="list-group-item">No wants or needs listed.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Background Section -->
+    <div class="container my-5">
+        <h3>Background</h3>
+        <div class="row">
+            <div class="col">
+                <ul class="list-group">
+                    {% for background in user_profile.background.all %}
+                        <li class="list-group-item">
+                            <strong>{{ background.get_category_display }}:</strong> {{ background.detail }}
+                        </li>
+                    {% empty %}
+                        <li class="list-group-item">No background information listed.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}
