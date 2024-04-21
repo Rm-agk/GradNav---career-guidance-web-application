@@ -1,29 +1,16 @@
-# CA472 template repo
+**GradNav Overview**
 
-This is a template for CA472 projects.
+GradNav is a web application designed to guide students in Ireland through their career and educational paths. Fueled by our own experiences of last-minute decisions during the CAO process, we developed GradNav to offer students personalised career pathways and course recommendations.
 
-## 1. Create your repo
+**Features:**
 
-One person from your project team should fork this repo, then add other teammates as project members on GitLab.
+Personalised Recommendations: Users input their subjects, skills, character traits, hobbies, wants, needs, and background, which are processed using a large language model (GPT-3.5-turbo) to generate specific course and career suggestions.
+Detailed Information: Each recommended course comes with comprehensive details including CAO points, potential salaries, university options, and accommodation possibilities.
+Interactive Elements: The app includes 55 career-specific quizzes and a popular careers section updated based on user activity, providing insights into various educational paths.
+In-App Support: A chatbot powered by GPT-3.5-turbo answers queries, offering a deeper understanding of the recommendations and helping to navigate complex choices.
+Goal:
+GradNav aims to reduce the anxiety and uncertainty students face by providing clear, focused, and actionable advice. Our app goes beyond generic suggestions by providing contextually rich guidance tailored to each user's unique profile.
 
-## 2. Name your repo appropriately
+**Motivation:**
 
-The name of your project repo must be of the form `2024-ca472-XXXXXXX`, where "`XXXXXXX`"
-should be replaced with your usernames (e.g. `2024-ca472-sblott-pclarke`).
-
-It is the *name of your repo* which matters (not the name of your project).
-
-You can change the name of your repo on GitLab under:
-
-- Settings / General / Advanced / Change path
-
-It looks like this:
-
-![change-repo-path](./res/repo-change-path2023.png "Change repo path.")
-
-After you have read this file, you
-should replace all of this content with a README describing your own project.
-
-## Additional resources
-
-- Repo [hygiene](https://gitlab.computing.dcu.ie/sblott/local-gitlab-documentation/blob/master/repo-hygiene.md)
+Our motivation is rooted in a desire to prevent students from misdirecting their educational efforts and to support the discovery of courses that truly match their personal and career aspirations. By integrating advanced AI and comprehensive data, GradNav serves as an all-in-one tool that simplifies the decision-making process, helping to maintain an educated workforce and empowering students with the confidence to make informed decisions about their future.
