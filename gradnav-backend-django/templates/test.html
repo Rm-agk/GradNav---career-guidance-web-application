@@ -1,0 +1,159 @@
+still not working from django.shortcuts import render, get_object_or_404, redirect
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.http import HttpResponse, HttpResponseRedirect
+from django.conf import settings
+from django.urls import reverse
+from django.contrib import messages
+from django.conf import settings
+import openai
+
+@login_required
+def display_additional_info(request, quiz_title):
+    # Ensure the user has scored enough to access this view.
+    if not request.session.get('display_additional_info', False):
+        messages.warning(request, "Take the Quiz! You are not recommended this career yet")
+        return redirect('quiz_details', quiz_title=quiz_title)
+
+    del request.session['display_additional_info']  # Clear the session variable
+
+    openai.api_key = settings.OPENAI_API_KEY
+    prompt = f"""
+    Given the quiz title '{quiz_title}', provide the following information:
+    1. Related job opportunities and their descriptions and personality types that suit the role.
+    2. Bachelor's degree courses available in Ireland related to the quiz topic and what colleges they can be studied in with points to match.
+    3. Salary insights for jobs related to the quiz topic.
+    4. Nearby accommodation options for students based on the courses recommended.
+    5. Any other relevant information.
+    """
+
+    try:
+        response = openai.Completion.create(
+            engine="gpt-3.5-turbo",
+            prompt=prompt,
+            temperature=0.5,
+            max_tokens=1000
+        )
+        # The text response is split into separate items, assuming each section is separated by two newlines
+        text_response = response.choices[0].text.strip().split('\n\n')  
+    except Exception as e:
+        messages.error(request, f"An error occurred while retrieving additional information: {e}")
+        return redirect('quiz_details', quiz_title=quiz_title)
+
+    # Paginate the responses
+    page_number = request.GET.get('page', 1)
+    paginator = Paginator(text_response, 1)  # Show 1 response per page
+    try:
+        page = paginator.page(page_number)
+    except PageNotAnInteger:
+        page = paginator.page(1)
+    except EmptyPage:
+        page = paginator.page(paginator.num_pages)
+
+    # Render the page with the paginated content
+    context = {
+        'quiz_title': quiz_title,
+        'section_content': page.object_list[0],
+        'page': page,
+    }
+    return render(request, 'quiz_details.html', context)
+
+{% extends "index.html" %}
+{% load static %}
+{% load quiz_tags %}
+{% load custom_filters %}
+
+{% block title %}Quiz Details - GradNav{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Quiz Details - GradNav</title>
+    
+    <style>
+        body {
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .containerinfo {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .quiz-title {
+            text-align: center;
+        }
+
+        .section {
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            overflow: hidden; /* Clear float */
+        }
+
+        .section h4 {
+            color: #555;
+        }
+
+        .section p {
+            color: #666;
+            margin-left: 130px; /* Adjust this value based on the width of your images */
+        }
+
+        .section img {
+            float: left;
+            margin-right: 20px; /* Adds some space between the image and the text */
+            width: 110px; /* Adjust this value as necessary */
+            height: auto;
+        }
+
+        .pagination {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .pagination a {
+            margin: 0 5px;
+            padding: 5px 10px;
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .pagination a.active {
+            background-color: #007BFF;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="containerinfo">
+        <h1 class="quiz-title">{{ quiz_title }}, The Perfect Career</h1>
+        <div class="section">
+            <!-- Display the current section content -->
+            {{ section_content|linebreaksbr }}
+            {{section}}
+        </div>
+        <!-- Pagination links -->
+        <div class="pagination">
+            {% if page.has_previous %}
+            <a href="?page={{ page.previous_page_number }}">Previous</a>
+            {% endif %}
+            <span>Page {{ page.number }} of {{ page.paginator.num_pages }}</span>
+            {% if page.has_next %}
+            <a href="?page={{ page.next_page_number }}">Next</a>
+            {% endif %}
+        </div>
+    </div>  
+</body>
+</html>
+{% endblock %}

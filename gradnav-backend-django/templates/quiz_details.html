@@ -1,52 +1,98 @@
+{% extends "index.html" %}
+{% load static %}
+{% load quiz_tags %}
+
+{% block title %}Quiz Details - GradNav{% endblock %}
+
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Your Page Title</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Quiz Details - GradNav</title>
+    
+    <style>
+
+        .wrapperstyle1{background-color: #f0f4f4;}
+
+        .subsection{background-color: #f0f4f4;}
+
+        .containerinfo {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            background: #fff;
+        }
+
+        .quiz-title {
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .sections {
+            margin-top: 20px;
+        }
+
+        .minisection {
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            width: 80%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 40px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            background-color: #fff;
+        }
+
+        .infosect{
+            text-align: center;
+        }
+
+        .section-image {
+            width: 80%;
+            height: auto;
+            display: block;
+            margin-top: 10px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+    </style>
 </head>
 <body>
-{% extends "index.html" %}
-{% load static %}
-
-{% block title %}Quiz Details - GradNav{% endblock title %}
-
-{% block content %}
-<div class="container my-5">
-    <h1 class="display-4 text-center mb-4">{{ quiz_title }}, The Perfect Career</h1>
-    
-    <!-- Check if there are sections to display -->
-    {% if additional_info.sections %}
-        <div id="accordion">
-            {% for section in additional_info.sections %}
-                <div class="card">
-                    <div class="card-header" id="heading{{ forloop.counter }}">
-                        <h5 class="mb-0">
-                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{ forloop.counter }}" aria-expanded="true" aria-controls="collapse{{ forloop.counter }}">
-                                Section {{ forloop.counter }}
-                            </button>
-                        </h5>
-                    </div>
-
-                    <div id="collapse{{ forloop.counter }}" class="collapse show" aria-labelledby="heading{{ forloop.counter }}" data-parent="#accordion">
-                        <div class="card-body">
-                            <pre>{{ section }}</pre>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-    {% else %}
-        <div class="alert alert-warning" role="alert">
-            Sorry, we could not find detailed information for this quiz.
-        </div>
-    {% endif %}
+    <!-- Main -->
+<div class="wrapperstyle1">
+    <div class="containerinfo">
+        <article id="main" class="special">
+            <!-- Dynamic Header from Django Template -->
+            <header style="background-color: #f0f4f4;">
+                <h2>{{ quiz_title }}</h2>
+                <p>Explore your career options with our detailed quiz analysis.</p>
+            </header>
+            <!-- Dynamic Sections from Django Template -->
+            <div class="subsection">
+            {% if additional_info.sections %}
+                {% for section, title in additional_info.sections|zip_lists:cat %}
+                    <section class="minisection">
+                        <header>
+                            <h3 style="text-align: center;">{{ title }}</h3>
+                        </header>
+                        <p class="infosect">{{ section | linebreaksbr }}</p>
+                    </section>
+                {% endfor %}
+            {% else %}
+                <p>Sorry, we could not find detailed information for this quiz.</p>
+            {% endif %}
+            </div>
+        </article>
+    </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 </html>
-{% endblock content %}
+{% endblock %}

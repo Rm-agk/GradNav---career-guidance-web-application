@@ -1,12 +1,153 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block title %} Calculator Result{% endblock title %}
+
+{% block content %}
 <!DOCTYPE html>
 <html>
 
 
-<head>
-    <title>Calculator Result</title>
-</head>
-<body>
-    <h1>Calculator Result</h1>
-    <p>Total Points: {{ total_points }}</p>
+<body style="overflow-x: hidden;">
+<main>
+    			<!-- Main -->
+				<div class="wrapper style1">
+
+					<div class="container">
+						<div class="row gtr-200">
+							<div class="col-8 col-12-mobile" id="content">
+								<article id="main">
+									<header>
+										<h2>Aaand the Results Are In! Congrats.</h2>
+										<p>
+										    You recieved {{ total_points }} points🥳
+										</p>
+									</header>
+									<img src="{% static 'images/student11.jpg' %}" class="image featured">
+									<p>
+										Just like celebrating receiving a certain number of points, make it a habit to celebrate small 
+                                        wins during your study sessions. Reward yourself when you reach a study goal or understand a 
+                                        difficult concept. This positive reinforcement can boost your motivation and help maintain your 
+                                        enthusiasm for learning. confidence, and purpose.
+									</p>
+									<section>
+										<header>
+											<h3>Learn from Real-Life Examples</h3>
+										</header>
+										<p>
+											Drawing inspiration from the founders' stories, as described in the original content, can greatly 
+                                            enhance your learning experience. By connecting academic subjects to real-life scenarios and 
+                                            success stories, you can see the practical applications of what you're studying. This approach not 
+                                            only makes the learning process more engaging and relevant but also deepens your understanding of 
+                                            the material. Seeing how theories and concepts are applied in the real world, similar to how the 
+                                            founders utilized their knowledge to create GradNav, can inspire innovation and creativity in your 
+                                            own projects. 
+										</p>
+									</section>
+								</article>
+							</div>
+							<div class="col-4 col-12-mobile" id="sidebar">
+								<hr class="first" />
+								<section>
+									<header>
+										<h3>Adopt Continuous Learning</h3>
+									</header>
+									<p>
+										As we are sure you are doing, always strive for continuous improvement 
+                                        in your studies. Seek feedback on your essays or problems from teachers and peers. 
+                                        Use this constructive criticism to refine your understanding and approach.
+									</p>
+									<footer>
+										<a href="{% url 'calculate' %}" target="_blank" class="button">Calculate Again</a>
+									</footer>
+								</section>
+								<hr />
+								<section>
+									<div class="row gtr-50">
+										<div class="col-4">
+										    <img src="{% static 'images/student21.jpg' %}" class="image fit" class="image featured">
+										</div>
+										<div class="col-8">
+											<h4>The GradNav Chatbot</h4>
+											<p>
+												The GradNav chatbot can help you reach your CAO points goals by providing personalized 
+                                                guidance on study techniques and curriculum understanding, tailored to optimize your 
+                                                learning effectiveness. It can also remind you of important deadlines and exam dates, 
+                                                ensuring you're well-prepared and can maximize your points potential for college admissions in Ireland.
+											</p>
+										</div>
+										<div class="col-4">
+											<img src="{% static 'images/student6.jpg' %}" class="image fit" class="image featured">
+										</div>
+										<div class="col-8">
+											<h4>Utilise Tools</h4>
+											<p>
+												Use educational apps and platforms for efficient learning.
+											</p>
+										</div>
+										<div class="col-4">
+											<img src="{% static 'images/student5.jpg' %}" class="image fit" class="image featured">
+										</div>
+										<div class="col-8">
+											<h4>Engage with Groups</h4>
+											<p>
+												Join study groups for peer support and insights.
+											</p>
+										</div>
+									</div>
+								</section>
+							</div>
+						</div>
+					</div>
+				</div>
+</main>
+<!-- Two -->
+    <div class="row" style="text-align: center; padding-left: 30px; padding-right: 30px;">
+        <div class="col-4 col-12-narrower" style="text-align: center;">
+
+            <section>
+                <header>
+                    <h3>Plan Financial Education</h3>
+                </header>
+                <p style="text-align: center;">Explore scholarships, grants, and financial aid options to make informed decisions about academic paths and future finances.</p>
+                <footer>
+                    <ul class="buttons">
+                        <li style="list-style-type: none;"><a href="{% url 'resources' %}" class="button small">Learn More</a></li>
+                    </ul>
+                </footer>
+            </section>
+
+        </div>
+        <div class="col-4 col-12-narrower" style="text-align: center;">
+
+            <section>
+                <header>
+                    <h3>Explore New Areas</h3>
+                </header>
+                <p style="text-align: center;">Expand your skills and interests by exploring new subjects or extracurricular activities that broaden your horizons.</p>
+                <footer>
+                    <ul class="buttons">
+                        <li style="list-style-type: none;"><a href="{% url 'all_quiz' %}" class="button small">Learn More</a></li>
+                    </ul>
+                </footer>
+            </section>
+
+        </div>
+        <div class="col-4 col-12-narrower" style="text-align: center;">
+
+            <section>
+                <header>
+                    <h3>Develop Skills</h3>
+                </header>
+                <p style="text-align: center;">Participate in a range of activities like clubs, sports, and internships to build critical skills for your personal profile.</p>
+                <footer>
+                    <ul class="buttons">
+                        <li style="list-style-type: none;"><a href="{% url 'profile' request.user.username %}" class="button small">Learn More</a></li>
+                    </ul>
+                </footer>
+            </section>
+
+        </div>
+    </div>
 </body>
 </html>
+{% endblock content %}

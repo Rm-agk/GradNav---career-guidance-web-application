@@ -7,21 +7,18 @@
 	<body class="homepage is-preload">
 		<div id="page-wrapper">
 	
-<section id="banner" style="background: ('{% static 'images/00.png' %}'); background-size: cover; height:550px;">
-  <header>
-    <div class="container text-center my-5">
-
-    <br>
-    <div class="d-inline-flex gap-2 mb-5">
-      {% if not request.user.is_authenticated %}
-      <a href="{% url 'register' %}" class="btn btn-outline-secondary btn-lg px-4" type="button">
-          Sign Up
-      </a>
-      {% endif %}
-  </div>
+      <section>
+        <div id="page-wrapper">
+	
+          <section style="margin: 0; padding: 0;">
+            <video id="banner" autoplay loop muted style="width: 100%; height: 550px; object-fit: cover; padding: 0; margin: 0;">
+              <source src="{% static 'videos/gradnavcover.mp4' %}" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </section>
+        </div>
+      </section>
     </div>
-  </header>
-</section>
 
 <!-- Main -->
 <div class="wrapper style2">
@@ -31,7 +28,7 @@
       <br>
       <h2><a href="#">GradNav, The Vision</a></h2>
       <p>
-        Empowering Futures, Your Path to Success, Tailored Just for You
+        Empowering Futures, Tranforming Lives
       </p>
     </header>
     <p style="text-align: center;">
@@ -90,9 +87,9 @@
     </article>
 
     <article>
-      <a href="/downloads" class="image featured"><img src="{% static 'images/student14.jpg' %}" alt="My image"></a>
+      <a href="/resources" class="image featured"><img src="{% static 'images/student14.jpg' %}" alt="My image"></a>
       <header>
-        <h3><a href="/downloads">Important Links</a></h3>
+        <h3><a href="/resources">Important Links</a></h3>
       </header>
       <p>Here's a couple webpages and forms you should look through</p>
     </article>
@@ -156,10 +153,6 @@
     </div>
   </section>
   </div>
-  
-</div>
-
-</div>
 
 <!-- Scripts -->
 <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script> 

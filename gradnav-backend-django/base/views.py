@@ -144,7 +144,7 @@ def downloads_view(request):
     user_profile = Profile.objects.get(user=user_object)
     
     context = {"user_profile": user_profile}
-    return render(request, "downloads.html", context)
+    return render(request, "resources.html", context)
 
 def search_users_view(request):
 
@@ -212,7 +212,8 @@ def calculate_points(request):
             
             # Calculate total points from the best 6 results
             total_points = sum(sorted(points, reverse=True)[:6])
-            return render(request, 'results.html', {'total_points': total_points})
+            return render(request, 'calculator_result.html', {'total_points': total_points, })
+        
     else:
         form = GradeForm()
     return render(request, 'calculate.html', {'form': form})

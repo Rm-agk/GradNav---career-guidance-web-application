@@ -1,19 +1,22 @@
-<!-- quiz/templates/quiz/recommendations.html -->
-
-{% extends 'index.html' %} <!-- Ensure this is extending the correct base template -->
+{% extends 'index.html' %}
 
 {% block head %}
-<!-- If your base template has a block for extra head content, include Bootstrap here if it's not already globally included -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <style>
-    .recommendations-container {
-        padding: 20px;
-        background-color: #f8f9fa;
-        border-radius: 5px;
+    .card-custom {
         margin-top: 20px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
-    .recommendations-content {
-        white-space: pre-line; /* Ensures that line breaks in the recommendations string are respected */
+    .card-header {
+        background-color: #007bff;
+        color: white;
+        font-size: 18px;
+    }
+    .card-body {
+        background-color: #f8f9fa;
+        color: #333;
+        font-family: 'Arial', sans-serif;
+        line-height: 1.6;
     }
 </style>
 {% endblock %}
@@ -21,9 +24,13 @@
 {% block content %}
 <div class="container mt-5">
     <h2 class="mb-4">Course and Career Recommendations</h2>
-    <div class="recommendations-container">
-        <!-- Using the "pre" tag to respect the formatting of the recommendations string -->
-        <p class="recommendations-content">{{ recommendations | linebreaksbr }}</p>
+    <div class="card card-custom">
+        <div class="card-header">
+            Recommendation
+        </div>
+        <div class="card-body">
+            <p class="card-text">{{ recommendations | linebreaksbr }}</p>
+        </div>
     </div>
 </div>
 {% endblock %}

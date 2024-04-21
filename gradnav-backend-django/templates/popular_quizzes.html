@@ -60,7 +60,7 @@
         <div class="col">
             <div class="card h-100">
                 <!-- Display quiz image (you'll need to handle image generation) -->
-                <img src="{% url 'generate_quiz_image' quiz.title %}" class="card-img-top" alt="Quiz Image">
+                <img src="{% url 'generate_quiz_image' quiz.title %}" class="card-img-top" alt="Quiz Image" width="500px" height="230px">
                 <div class="card-body">
                     <h5 class="card-title">{{ quiz.title }}</h5>
                     <p class="card-text">{{ quiz.description }}</p>

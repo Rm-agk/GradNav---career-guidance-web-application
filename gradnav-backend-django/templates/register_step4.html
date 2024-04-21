@@ -3,26 +3,49 @@
 {% block title %}Register: Hobbies{% endblock title %}
 
 {% block content %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+    .hobby-card {
+        transition: transform .2s; /* Animation */
+    }
+    .hobby-card:hover {
+        transform: scale(1.05); /* Slightly enlarge the cards on hover */
+        cursor: pointer;
+    }
+</style>
 
-<h1 class="display-4 text-center my-5">Select Your Hobbies</h1>
+<h1 class="display-4 text-center mt-5 mb-4">Select Your Hobbies</h1>
 
 <div class="container">
-    <form method="POST" action="">
-        {% csrf_token %}
-        <fieldset class="form-group">
-            <legend class="col-form-label pt-0">Hobbies:</legend>
-            {% for hobby in form.hobbies.field.queryset %}
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="hobbies" value="{{ hobby.id }}" id="hobby{{ hobby.id }}"
-                       {% if hobby.id in form.hobbies.value %} checked {% endif %}>
-                <label class="form-check-label" for="hobby{{ hobby.id }}">
-                    {{ hobby.name }}
-                </label>
-            </div>
-            {% endfor %}
-        </fieldset>
-        <button type="submit" class="btn btn-primary mt-2">Next</button>
-    </form>
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <form method="POST" action="">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    <legend class="col-form-label pt-0 fw-bold">Hobbies:</legend>
+                    <div class="row">
+                        {% for hobby in form.hobbies.field.queryset %}
+                        <div class="col-md-6 mb-3">
+                            <div class="card hobby-card shadow-sm">
+                                <div class="card-body">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="hobbies" value="{{ hobby.id }}" id="hobby{{ hobby.id }}"
+                                            {% if hobby.id in form.hobbies.value %} checked {% endif %}>
+                                        <label class="form-check-label h5" for="hobby{{ hobby.id }}">
+                                            {{ hobby.name }}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </fieldset>
+                <button type="submit" class="btn btn-primary mt-3">Next</button>
+            </form>
+        </div>
+    </div>
 </div>
-
+<br>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/js/bootstrap.bundle.min.js"></script>
 {% endblock content %}

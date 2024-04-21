@@ -27,6 +27,7 @@ def register(request):
         return redirect('profile', username=request.user.username)
 
     step = request.session.get('register_step', 1)
+    template_name = f'register_step{step}.html'
 
     if request.method == 'POST':
         if step == 1:

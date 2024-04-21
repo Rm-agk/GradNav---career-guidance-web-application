@@ -1,5 +1,5 @@
 {% extends 'index.html' %}
-{% block title %}About Us - gradnav{% endblock title %}
+{% block title %}Calculate - gradnav{% endblock title %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
@@ -52,6 +52,9 @@
     background-color: #003d7a; /* Darker shade on hover */
 }
 
+.paragraph {text-align: center;
+}
+
 </style>
 
 <div class="wrapper style1">
@@ -73,6 +76,42 @@
             </form>
         </article>
     </div>
+    <br>
+
+    <div class="container">
+    <div class="row">
+        <article class="col-4 col-12-mobile special">
+            <img src="{% static 'images/student19.jpg' %}" alt="My image" class="image featured">
+            <header>
+                <h3>Prioritize High-Scoring Subjects</h3>
+            </header>
+            <p class="paragraph">
+                Focus more on subjects you excel in and that offer higher potential points. 
+                Carefully choose your course preferences based on your interests.
+            </p>
+        </article>
+        <article class="col-4 col-12-mobile special">
+            <img src="{% static 'images/student18.jpg' %}" alt="My image" class="image featured">
+            <header>
+                <h3>Do What Will Work for You</h3>
+            </header>
+            <p class="paragraph">
+                Don't choose subhects baesd on what your friends do. 
+                What subjects can you excel in to maximize your score?
+            </p>
+        </article>
+        <article class="col-4 col-12-mobile special">
+            <img src="{% static 'images/student21.jpg' %}" alt="My image" class="image featured">
+            <header>
+                <h3>Use All the Resources Available</h3>
+            </header>
+            <p class="paragraph">
+                Take advantage of all available resources such as past examination papers, 
+                and other educational e-platforms. Check some out <a href="{% url 'resources' %}">here.</a>
+            </p>
+        </article>
+    </div>
+</div>
 </div>
 
 

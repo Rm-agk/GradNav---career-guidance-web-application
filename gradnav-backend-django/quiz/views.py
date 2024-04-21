@@ -141,20 +141,21 @@ def quiz_details(request, quiz_title):
     # Fetch additional information using the quiz title
     additional_info = get_additional_info(quiz_title)
 
+    cat = [
+        "Job opportunities",
+        "Bachelor's degree courses",
+        "Salary insights",
+        "Nearby accommodation",
+        "Other relevant information"
+    ]
+
     # Pass the retrieved information to the template
     context = {
         'quiz_title': quiz_title,
         'additional_info': additional_info,
+        'cat':cat
     }
     return render(request, 'quiz_details.html', context)
-
-import openai
-import re
-from django.conf import settings
-
-import openai
-import re
-from django.conf import settings
 
 import openai
 import re
@@ -163,12 +164,12 @@ from django.conf import settings
 def get_additional_info(quiz_title):
     openai.api_key = settings.OPENAI_API_KEY
 
-    prompt = f"""Given the quiz title '{quiz_title}', provide the following information:
+    prompt = f"""Given the quiz title '{quiz_title}', provide detailed information on the following information:
 1. Related job opportunities and their descriptions and personality types that suit the role.
 2. Bachelor's degree courses available in Ireland related to the quiz topic and what colleges they can be studied in with points to match.
-3. Salary insights for jobs related to the quiz topic.
-4. Nearby accommodation options for students based on the courses recommended.
-5. Any other relevant information.
+3. Salary insights for per job opportunity related to the quiz topic for an entry level position and with career progression.
+4. Nearby accommodation options (by name) for each college mentioned.
+5. Any other relevant information e.g. if further education after level 8 required, there is demand for role etc.
 """
 
     try:
@@ -211,8 +212,6 @@ from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from .utils import generate_chatgpt_prompt
 from django.contrib.auth.decorators import login_required
-import openai
-from django.conf import settings
 
 # Ensure OpenAI client is initialized (as shown above)
 client = openai.OpenAI(api_key=settings.OPENAI_API_KEY)
@@ -245,54 +244,3 @@ def get_recommendations(request):
     else:
         # Handle unexpected method
         return JsonResponse({"error": "Method not allowed"}, status=405)
-
-from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
-from django.conf import settings
-from django.urls import reverse
-from django.contrib.auth.decorators import login_required
-import openai
-
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, redirect
-from django.contrib import messages
-from django.conf import settings
-import openai
-
-@login_required
-def display_additional_info(request, quiz_title):
-    # Ensure the user has scored enough to access this view.
-    # If not, redirect them and show a warning message.
-    if not request.session.get('display_additional_info', False):
-        messages.warning(request, "Take the Quiz!, You are not recommended this career yet")
-        # Redirect to the detailed quiz view.
-        return redirect('quiz_details', quiz_title=quiz_title)
-
-    # Clear the session variable after checking it.
-    del request.session['display_additional_info']
-
-    # OpenAI API call logic
-    openai.api_key = settings.OPENAI_API_KEY
-    prompt = f"""
-Given the quiz title '{quiz_title}', provide the following information:
-1. Related job opportunities and their descriptions and personality types that suit the role.
-2. Bachelor's degree courses available in Ireland related to the quiz topic and what colleges they can be studied in with points to match.
-3. Salary insights for jobs related to the quiz topic.
-4. Nearby accommodation options for students based on the courses recommended.
-5. Any other relevant information.
-"""
-    try:
-        response = openai.Completion.create(
-            engine="gpt-3.5-turbo",
-            prompt=prompt,
-            temperature=0.5,
-            max_tokens=1000
-        )
-        text_response = response.choices[0].message['content'].strip()
-    except Exception as e:
-        messages.error(request, f"An error occurred while retrieving additional information: {e}")
-        return redirect('quiz_details', quiz_title=quiz_title)
-
-    # Return the additional information as an HttpResponse
-    return HttpResponse(text_response, content_type="text/plain")
