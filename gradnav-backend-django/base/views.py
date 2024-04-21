@@ -263,6 +263,9 @@ def chat_with_gpt(request):
 
 
 
+
+
+
 def popular_quizzes(request):
     # Retrieve top 5 most popular quizzes based on submissions count
     popular_quizzes = Quiz.objects.order_by('-submissions_count')[:5]

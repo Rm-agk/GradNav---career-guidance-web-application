@@ -244,3 +244,47 @@ def get_recommendations(request):
     else:
         # Handle unexpected method
         return JsonResponse({"error": "Method not allowed"}, status=405)
+    
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib import messages
+from django.conf import settings
+import openai
+
+@login_required
+def display_additional_info(request, quiz_title):
+    # Ensure the user has scored enough to access this view.
+    # If not, redirect them and show a warning message.
+    if not request.session.get('display_additional_info', False):
+        messages.warning(request, "")
+        # Redirect to the detailed quiz view.
+        return redirect('quiz_details', quiz_title=quiz_title)
+
+    # Clear the session variable after checking it.
+    del request.session['display_additional_info']
+
+    # OpenAI API call logic
+    openai.api_key = settings.OPENAI_API_KEY
+    prompt = f"""
+Given the quiz title '{quiz_title}', provide the following information:
+1. Related job opportunities and their descriptions and personality types that suit the role.
+2. Bachelor's degree courses available in Ireland related to the quiz topic and what colleges they can be studied in with points to match.
+3. Salary insights for jobs related to the quiz topic.
+4. Nearby accommodation options for students based on the courses recommended.
+5. Any other relevant information.
+"""
+    try:
+        response = openai.Completion.create(
+            engine="gpt-3.5-turbo",
+            prompt=prompt,
+            temperature=0.5,
+            max_tokens=1000
+        )
+        text_response = response.choices[0].message['content'].strip()
+    except Exception as e:
+        messages.error(request, f"An error occurred while retrieving additional information: {e}")
+        return redirect('quiz_details', quiz_title=quiz_title)
+
+    # Return the additional information as an HttpResponse
+    return HttpResponse(text_response, content_type="text/plain")
