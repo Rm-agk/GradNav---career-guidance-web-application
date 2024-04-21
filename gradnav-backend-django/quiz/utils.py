@@ -33,10 +33,10 @@ Given a student with the following profile:
 - Background: {background_str}
 
 Could you recommend:
-1. Five career paths that align with these skills, subjects, and personal attributes, including estimated salaries for each career in Ireland.
-2. Five university courses in Ireland that the student could pursue, information about each course such as CAO points required for admission, and the universities offering these courses.
+1. One career path that align with these skills, subjects, and personal attributes, including estimated salaries for each career in Ireland
+a.  university course in Ireland that the student could pursue, information about the course such as CAO points required for admission, and the university offering these course. And For each career path and university course recommended, please provide a brief explanation of why they are suited to the student's profile.
+And do this for 4 other career and course paths, it should be numbered 1-5
 
-For each career path and university course recommended, please provide a brief explanation of why they are suited to the student's profile.
 """
     
     return prompt
