@@ -2,7 +2,130 @@
 {% load static %}
 {% block title %}@{{ request.user.username }} Welcome - GradNav{% endblock title %}
 {% block content %}
+<style>
+  .overallreview {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
+.containerreview {
+    width: 100%;
+    height: 100vh;
+    color: grey;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #fff;
+}
+
+.overallreview h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.description {
+    text-align: center;
+    width: 43%;
+}
+
+.clientImage {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.clientImage span {
+    margin-left: 10px;
+}
+
+.clientImage img {
+    width: 40px;
+}
+
+.reviewSection {
+    padding: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.reviewItem {
+    width: 300px;
+    padding: 10px;
+    margin: 1rem;
+    cursor: pointer;
+    border-radius: 10px;
+    background-color: #f0f4f4;
+    border: 1px solid #f0f4f4;
+    transition: all .2s linear;
+}
+
+.reviewItem:hover {
+    border-color: #df7366;
+    transform: scale(1.01);
+    background-color: #f0f4f4;
+    box-shadow: 0 0px 5px 0px #df7366;
+}
+
+.top {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.top ul {
+    display: flex;
+    list-style: none;
+}
+
+.top ul li {
+    padding-left: 4px;
+}
+
+.overallreview article p {
+    font-size: 15px;
+    font-weight: 100;
+    margin-bottom: 1rem;
+    font-family: system-ui;
+}
+
+
+@media screen and (max-width:700px) {
+    .container {
+        height: auto;
+    }
+
+    .description {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width:375px) {
+    .reviewSection {
+        padding: 0;
+    }
+
+    .reviewItem {
+        width: 100%;
+    }
+
+    .clientImage {
+        margin-bottom: 0.6rem;
+    }
+
+    .top {
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+    }
+}
+</style>
 <html>
 	<body class="homepage is-preload">
 		<div id="page-wrapper">
@@ -105,53 +228,87 @@
 </section>
 
 <!-- Features -->
-<div class="wrapper style1">
+  <section class="overallreview">
+  <div class="containerreview">
+    <br>
+    <h2>What Our Users Have to Say</h2>
+    <p class="description">A Five Star Average Review! This is Why You Should Invest into a Better Tomorrow.</p>
 
-  <section id="features" class="container special">
-    <header>
-      <h2>What Our Users Have to Say</h2>
-      <p>A Five Star Average Review! This is Why You Should Invest into a Better Tomorrow.</p>
-    </header>
-    <div class="row">
-      <article class="col-4 col-12-mobile special">
-        <a href="#" class="image featured"><img src="{% static 'images/student7.jpg' %}" alt="My image"></a>
-        <header>
-          <h3><a href="#">St. Andrew's School - March 15, 2023</a></h3>
-        </header>
-        <p style="text-align: center;">
-          GradNav transformed our 2023 Leaving Cycle students' approach to their futures, 
-          instilling confidence and clarity. Its guidance sparked
-          excitement about their educational paths. 
-          A true asset to both students and educators, GradNav earns five stars from St. Andrew's.
-          Highly recommended for empowering students.
-        </p>
-      </article>
-      <article class="col-4 col-12-mobile special">
-        <a href="#" class="image featured"><img src="{% static 'images/student8.jpg' %}" alt="My image"></a>
-        <header>
-          <h3><a href="#">Mercy Chinwe - June 2, 2023</a></h3>
-        </header>
-        <p style="text-align: center;">
-          I was so overwhelmed with the pressure of choosing a future path, 
-          especially with my interest in medicine which seemed like a distant dream. 
-          GradNav provided clarity but also personalized guidance that mirrored 
-          my strengths and aspirations. I now see a clear direction laid out 
-          that feels achievable and real! 
-        </p>
-      </article>
-      <article class="col-4 col-12-mobile special">
-        <a href="#" class="image featured"><img src="{% static 'images/student9.jpg' %}" alt="My image"></a>
-        <header>
-          <h3><a href="#">David Murphy - September 9, 2023</a></h3>
-        </header>
-        <p style="text-align: center;">
-          Bought GradNav for my son, who was convinced college wasn't for him, 
-          believing no course could match his interests. The platform proved him wrong, 
-          unveiling paths he'd never considered. Now, he's excited about his university prospects. 
-          A game-changer for any parent. Five stars!</p>
-      </article>
-    </div>
+    <!-- Clients Review Section -->
+    <div class="reviewSection">
+
+    <!-- Clients Review-1 Section Starts from Here  -->
+        <div class="reviewItem">
+            <div class="top">
+                <div class="clientImage">
+                  <img src="{% static 'images/testimonial1.png' %}" alt="My image" width="300px">
+                    <span>Andrew's CBS</span>
+                </div>
+                <ul>
+                    <li><i class="fa-solid fa-star"></i></li>
+                    <li><i class="fa-solid fa-star"></i></li>
+                    <li><i class="fa-solid fa-star"></i></li>
+                    <li><i class="fa-solid fa-star"></i></li>
+                    <li><i class="fa-solid fa-star"></i></li>
+                </ul>
+            </div>
+            <article>
+                <p class="review">GradNav transformed our 2023 Leaving Cycle students' approach to their futures. 
+                  It filled them with a confidence that university is possible for anyone.
+                  A true asset to both students and educators, Highly recommended for empowering students.
+                </p>
+                <p>March 15, 2023</p>
+            </article>
+        </div>
+
+    <!-- Clients Review-2 Section Starts from Here  -->
+        <div class="reviewItem">
+            <div class="top">
+                <div class="clientImage">
+                  <img src="{% static 'images/testimonial2.png' %}" alt="My image" width="300px">
+                    <span>Mercy Chinwe</span>
+                </div>
+                <ul>
+                    <li><i class="fa-solid fa-star"></i></li>
+                    <li><i class="fa-solid fa-star"></i></li>
+                    <li><i class="fa-solid fa-star"></i></li>
+                    <li><i class="fa-solid fa-star"></i></li>
+                    <li><i class="fa-solid fa-star"></i></li>
+                </ul>
+            </div>
+            <article>
+                <p class="review">I was so overwhelmed with the pressure of choosing a future path, 
+                  GradNav provided personalised guidance mirroring my strengths and aspirations. 
+                  I now see a clear direction laid out that feels achievable and real!</p>
+                <p>June 2, 2023</p>
+            </article>
+        </div>
+
+    <!-- Clients Review-3 Section Starts from Here  -->
+        <div class="reviewItem">
+            <div class="top">
+                <div class="clientImage">
+                  <img src="{% static 'images/testimonial3.png' %}" alt="My image" width="300px">
+                    <span>David Murphy</span>
+                </div>
+                <ul>
+                    <li><i class="fa-solid fa-star"></i></li>
+                    <li><i class="fa-solid fa-star"></i></li>
+                    <li><i class="fa-solid fa-star"></i></li>
+                    <li><i class="fa-solid fa-star"></i></li>
+                    <li><i class="fa-solid fa-star"></i></li>
+                </ul>
+            </div>
+            <article>
+                <p class="review">Bought GradNav for my son, who was convinced college wasn't for him. 
+                 The platform proved him wrong, unveiling paths he'd never considered. Now, he's excited 
+                 about his university prospects. A game-changer for any parent. Five stars!</p>
+                <p>Jan 01, 2023</p>
+            </article>
+        </div>
+    </div></div>
   </section>
+  
   </div>
 
 <!-- Scripts -->
