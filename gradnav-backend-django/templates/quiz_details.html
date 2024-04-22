@@ -5,33 +5,19 @@
 {% block title %}Quiz Details - GradNav{% endblock %}
 
 {% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/extra.css' %}">
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Quiz Details - GradNav</title>
-    
+
     <style>
-
-        .wrapperstyle1{background-color: #f0f4f4;}
-
-        .subsection{background-color: #f0f4f4;}
-
         .containerinfo {
             width: 90%;
             max-width: 1200px;
             margin: 20px auto;
-            background: #fff;
-        }
-
-        .quiz-title {
-            text-align: center;
-            font-weight: bold;
-        }
-
-        .sections {
-            margin-top: 20px;
         }
 
         .minisection {
@@ -47,33 +33,57 @@
             position: relative;
             background-color: #fff;
         }
-
-        .infosect{
-            text-align: center;
-        }
-
-        .section-image {
-            width: 80%;
-            height: auto;
-            display: block;
-            margin-top: 10px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
     </style>
+
 </head>
+
 <body>
+    <!-- About Section -->
+<section id="about" class="section about">
+
+    <div class="container">
+
+      <div class="row gy-3">
+
+        <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+          <img src="{% static 'images/career.jpg' %}" alt="" class="img-fluid">
+        </div>
+
+        <div class="col-lg-6 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="200" style="color: #343a40;;">
+          <div class="about-content ps-0 ps-lg-3">
+            <h3>{{ quiz_title }}!!.. But What is That?</h3>
+            <p class="fst-italic">
+              Let's Get Into It!
+            </p>
+            <ul>
+              <li>
+                <i class="bi bi-diagram-3"></i>
+                <div>
+                  <h4>Career and Education Matching</h4>
+                  <p>Find colleges that offer courses tailored to your desired career paths, complete with insights into potential job opportunities and salary expectations.</p>
+                </div>
+              </li>
+              <li>
+                <i class="bi bi-fullscreen-exit"></i>
+                <div>
+                  <h4>Living and Learning Support</h4>
+                  <p>Access essential information on accommodation, cost of living, and other resources to ensure a smooth transition into your chosen field and educational environment.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </section><!-- /About Section -->
+
     <!-- Main -->
 <div class="wrapperstyle1">
     <div class="containerinfo">
         <article id="main" class="special">
-            <!-- Dynamic Header from Django Template -->
-            <header style="background-color: #f0f4f4;">
-                <h2>{{ quiz_title }}</h2>
-                <p>Explore your career options with our detailed quiz analysis.</p>
-            </header>
             <!-- Dynamic Sections from Django Template -->
             <div class="subsection">
             {% if additional_info.sections %}
@@ -82,17 +92,61 @@
                         <header>
                             <h3 style="text-align: center;">{{ title }}</h3>
                         </header>
-                        <p class="infosect">{{ section | linebreaksbr }}</p>
+                        <p class="infosect" style="color:#343a40;">{{ section | linebreaksbr }}</p>
                     </section>
                 {% endfor %}
             {% else %}
-                <p>Sorry, we could not find detailed information for this quiz.</p>
+                <p style="color:#343a40;">Sorry, we could not find detailed information for this quiz.</p>
             {% endif %}
             </div>
         </article>
     </div>
 </div>
 
+<!-- Services Section -->
+<section id="services" class="services section">
+  
+    <div class="container">
+
+      <div class="row gy-4">
+
+        <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
+          <div class="service-item position-relative">
+            <div class="icon"><i class="bi bi-activity icon"></i></div>
+            <h4>Job Opportunities</h4>
+            <p>We have outlined a couple of possible career paths you may be interested in.</p>
+          </div>
+        </div><!-- End Service Item -->
+
+        <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
+          <div class="service-item position-relative">
+            <div class="icon"><i class="bi bi-bounding-box-circles icon"></i></div>
+            <h4>Bachelor's Degree Courses</h4>
+            <p>Finding what colleges that suit specific career paths can be difficult. We've done it for you!</p>
+          </div>
+        </div><!-- End Service Item -->
+
+        <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="300">
+          <div class="service-item position-relative">
+            <div class="icon"><i class="bi bi-calendar4-week icon"></i></div>
+            <h4>Salary Insights</h4>
+            <p>We understand that salary can be a huge factor in your decisions. Let's have a look.</p>
+          </div>
+        </div><!-- End Service Item -->
+
+        <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="400">
+          <div class="service-item position-relative">
+            <div class="icon"><i class="bi bi-broadcast icon"></i></div>
+            <h4>Accomodation & Other Info</h4>
+            <p>Just a few pieces of information that may be relevant for you!</p>
+          </div>
+        </div><!-- End Service Item -->
+
+      </div>
+
+    </div>
+
+  </section><!-- /Services Section -->
 </body>
 </html>
 {% endblock %}

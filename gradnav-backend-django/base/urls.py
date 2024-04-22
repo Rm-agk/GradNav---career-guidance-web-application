@@ -5,7 +5,6 @@ from .views import calculate_points
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('dashboard', views.dashboard_view, name='dashboard'),
     path('message/<int:id>', views.message_view, name='message'),
     path('about', views.about_view, name='about'),
     path('contact', views.contact_view, name='contact'),
