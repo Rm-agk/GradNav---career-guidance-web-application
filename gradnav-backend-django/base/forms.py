@@ -1,5 +1,5 @@
 from django import forms
-from .models import Grade
+from .models import *
 
 GRADE_CHOICES = [
     ('', 'Select a grade'),

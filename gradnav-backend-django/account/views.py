@@ -2,25 +2,11 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, auth
-from .models import Profile
-from quiz.models import QuizSubmission
-
-
-# Create your views here.
-# app/views.py
-from django.shortcuts import render, redirect
-from django.contrib import messages
+from quiz.models import *
 from .forms import *
 from django.shortcuts import get_object_or_404
-# Assume these are the models for interests, subjects, and skills
-# from .models import Interest, Subject, Skill
-
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from django.contrib.auth.models import User, auth
 from django.db import transaction
 from .models import Profile, Skill, Subject, Hobby, CharacterTrait, WantsNeeds, Background
-from .forms import RegisterForm, SkillsForm, SubjectsForm, HobbiesForm, CharacterTraitsForm, WantsNeedsForm, BackgroundForm
 
 def register(request):
     if request.user.is_authenticated:
@@ -131,11 +117,6 @@ def register(request):
     return render(request, template_name, context)
 
 
-# Your other view functions...
-
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404
-from .models import Profile
 
 @login_required(login_url='login')
 def profile(request, username):
@@ -157,13 +138,6 @@ def profile(request, username):
         "background": background,
     }
     return render(request, "profile.html", context)
-
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
-from .models import Profile
-from .forms import SkillsForm, SubjectsForm, HobbiesForm, CharacterTraitsForm, WantsNeedsForm, BackgroundForm  # Ensure these forms are defined as ModelForm
 
 @login_required(login_url='login')
 def editProfile(request):
@@ -245,7 +219,6 @@ def editProfile(request):
             "background_form": background_form
         }
         return render(request, 'profile-edit.html', context)
-
 
 
 @login_required(login_url='login')
