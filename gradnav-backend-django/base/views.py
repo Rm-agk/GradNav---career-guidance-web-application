@@ -1,17 +1,23 @@
 from django.shortcuts import render, HttpResponse, redirect
-from django.contrib.auth.models import User
+from django.http import JsonResponse
 from django.contrib import messages
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.views.decorators.http import require_http_methods
+from django.views.decorators.csrf import csrf_exempt
+
 from account.models import Profile
 from quiz.models import Quiz, QuizSubmission, Question
-from django.contrib.auth.decorators import login_required, user_passes_test
-import datetime
-from .models import Message
-from django.db.models import Count, Q
-import math
-from django.db.models.functions import ExtractYear
+from .models import Message, Grade, Quiz
 from .forms import GradeForm
-from .models import Grade
-from .models import Quiz
+
+from django.db.models import Count, Q
+from django.db.models.functions import ExtractYear
+from django.conf import settings
+
+import datetime
+import math
+import requests
 
 
 # Create your views here.
@@ -218,13 +224,6 @@ def calculate_points(request):
         form = GradeForm()
     return render(request, 'calculate.html', {'form': form})
 
-
-from django.http import JsonResponse
-from django.views.decorators.http import require_http_methods
-from django.views.decorators.csrf import csrf_exempt
-import requests
-from django.conf import settings
-
 @csrf_exempt  # CSRF exemption for demonstration purposes only
 @require_http_methods(["POST"])  # Ensure this view only accepts POST requests
 def chat_with_gpt(request):
@@ -260,10 +259,6 @@ def chat_with_gpt(request):
 
     # Return the chatbot's response in JSON format
     return JsonResponse({"response": chat_response})
-
-
-
-
 
 
 def popular_quizzes(request):

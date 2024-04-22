@@ -1,11 +1,21 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse, JsonResponse
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from account.models import Profile
-from .models import Quiz, Category
+from django.views.decorators.http import require_http_methods
+from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
-from quiz.models import QuizSubmission
-from django.contrib import messages
+
+from account.models import Profile
+from .models import Quiz, Category, QuizSubmission
+from .utils import generate_chatgpt_prompt
+
+import requests
+import re
+import openai
+
+from django.conf import settings
 
 # Create your views here.
 
@@ -45,17 +55,6 @@ def search_view(request, category):
 
     context = {"user_profile": user_profile, "quizzes": quizzes, "categories": categories}
     return render(request, 'all-quiz.html', context)
-
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from account.models import Profile
-from .models import Quiz, QuizSubmission
-
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from .models import User, Quiz, QuizSubmission
 
 @login_required(login_url='login')
 def quiz_view(request, quiz_id):
@@ -103,18 +102,9 @@ def quiz_view(request, quiz_id):
     return render(request, 'quiz.html', context)
 
 
-
-
-
-from django.shortcuts import render
-from .models import Quiz
-
 def popular_quizzes(request):
     popular_quizzes = Quiz.objects.order_by('-submissions_count')[:6]
     return render(request, 'popular_quizzes.html', {'popular_quizzes': popular_quizzes})
-
-
-import requests
 
 def generate_quiz_image(request, quiz_title):
     api_key = 'AIzaSyCzRFLYY6wTAHaah0C6hIzvsLJEqMSsKtk'
@@ -134,8 +124,6 @@ def generate_quiz_image(request, quiz_title):
 
     # Return a redirect response to the image URL
     return redirect(image_url)
-
-from openai import ChatCompletion
 
 def quiz_details(request, quiz_title):
     # Fetch additional information using the quiz title
@@ -157,9 +145,6 @@ def quiz_details(request, quiz_title):
     }
     return render(request, 'quiz_details.html', context)
 
-import openai
-import re
-from django.conf import settings
 
 def get_additional_info(quiz_title):
     openai.api_key = settings.OPENAI_API_KEY
@@ -204,18 +189,8 @@ def get_additional_info(quiz_title):
     return additional_info
 
 
-
-
-
-from django.http import JsonResponse
-from django.views.decorators.http import require_http_methods
-from django.views.decorators.csrf import csrf_exempt
-from .utils import generate_chatgpt_prompt
-from django.contrib.auth.decorators import login_required
-
 # Ensure OpenAI client is initialized (as shown above)
 client = openai.OpenAI(api_key=settings.OPENAI_API_KEY)
-
 
 @login_required
 @csrf_exempt  # Consider security implications in production
@@ -245,12 +220,6 @@ def get_recommendations(request):
         # Handle unexpected method
         return JsonResponse({"error": "Method not allowed"}, status=405)
     
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, redirect
-from django.contrib import messages
-from django.conf import settings
-import openai
 
 @login_required
 def display_additional_info(request, quiz_title):
